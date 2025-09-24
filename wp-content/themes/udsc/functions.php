@@ -138,7 +138,10 @@ add_action( 'widgets_init', 'udsc_widgets_init' );
  * Enqueue scripts and styles.
  */
 function udsc_scripts() {
-	wp_enqueue_style( 'udsc-style', get_stylesheet_uri(), array(), _S_VERSION );
+	// Подключаем кастомные шрифты
+	wp_enqueue_style( 'udsc-fonts', get_template_directory_uri() . '/assets/fonts.css', array(), _S_VERSION );
+	
+	wp_enqueue_style( 'udsc-style', get_stylesheet_uri(), array('udsc-fonts'), _S_VERSION );
 	wp_style_add_data( 'udsc-style', 'rtl', 'replace' );
 
 	wp_enqueue_script( 'udsc-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
@@ -148,6 +151,15 @@ function udsc_scripts() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'udsc_scripts' );
+
+/**
+ * Preload custom fonts for better performance
+ */
+function udsc_preload_fonts() {
+	echo '<link rel="preload" href="' . get_template_directory_uri() . '/src/fonts/Play-Regular.ttf" as="font" type="font/ttf" crossorigin>';
+	echo '<link rel="preload" href="' . get_template_directory_uri() . '/src/fonts/Play-Bold.ttf" as="font" type="font/ttf" crossorigin>';
+}
+add_action( 'wp_head', 'udsc_preload_fonts', 1 );
 
 /**
  * Implement the Custom Header feature.
@@ -175,4 +187,52 @@ require get_template_directory() . '/inc/customizer.php';
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
+
+/**
+ * Register Case Study Custom Post Type for the financial service theme
+ */
+function udsc_register_case_study_post_type() {
+	$args = array(
+		'public'             => true,
+		'publicly_queryable' => true,
+		'show_ui'            => true,
+		'show_in_menu'       => true,
+		'query_var'          => true,
+		'rewrite'            => array( 'slug' => 'case-studies' ),
+		'capability_type'    => 'post',
+		'has_archive'        => true,
+		'hierarchical'       => false,
+		'menu_position'      => null,
+		'menu_icon'          => 'dashicons-portfolio',
+		'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' ),
+		'labels'             => array(
+			'name'               => _x( 'Кейсы', 'post type general name', 'udsc' ),
+			'singular_name'      => _x( 'Кейс', 'post type singular name', 'udsc' ),
+			'menu_name'          => _x( 'Кейсы', 'admin menu', 'udsc' ),
+			'name_admin_bar'     => _x( 'Кейс', 'add new on admin bar', 'udsc' ),
+			'add_new'            => _x( 'Добавить новый', 'case study', 'udsc' ),
+			'add_new_item'       => __( 'Добавить новый кейс', 'udsc' ),
+			'new_item'           => __( 'Новый кейс', 'udsc' ),
+			'edit_item'          => __( 'Редактировать кейс', 'udsc' ),
+			'view_item'          => __( 'Просмотреть кейс', 'udsc' ),
+			'all_items'          => __( 'Все кейсы', 'udsc' ),
+			'search_items'       => __( 'Искать кейсы', 'udsc' ),
+			'parent_item_colon'  => __( 'Родительские кейсы:', 'udsc' ),
+			'not_found'          => __( 'Кейсы не найдены.', 'udsc' ),
+			'not_found_in_trash' => __( 'В корзине кейсы не найдены.', 'udsc' ),
+		),
+	);
+
+	register_post_type( 'case_study', $args );
+}
+add_action( 'init', 'udsc_register_case_study_post_type' );
+
+/**
+ * Flush rewrite rules when the theme is activated
+ */
+function udsc_flush_rewrite_rules() {
+	udsc_register_case_study_post_type();
+	flush_rewrite_rules();
+}
+add_action( 'after_switch_theme', 'udsc_flush_rewrite_rules' );
 
