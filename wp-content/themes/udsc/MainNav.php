@@ -102,7 +102,7 @@ class UDSC_MainNav {
         
         ob_start();
         ?>
-        <div class="hidden lg:flex items-center space-x-8">
+        <div class="hidden lg:flex items-center space-x-6">
             <?php foreach ($menu_items as $item): ?>
                 <?php if (isset($item['children'])): ?>
                     <!-- Dropdown Menu Item -->
