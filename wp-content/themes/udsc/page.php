@@ -13,19 +13,19 @@
  */
 
 get_header();
+$sections = get_field('blocks');
 ?>
-
-	<main id="primary" class="site-main">
-
-		<?php
-		while ( have_posts() ) :
-			the_post();
-			get_template_part( 'template-parts/content', 'page' );
-		endwhile; // End of the loop.
-		?>
-
-	</main><!-- #main -->
-
+<main id="primary" class="site-main">
+	<?php
+	if ($sections) {
+		foreach ($sections as $value) {
+			get_template_part("blocks/{$value['acf_fc_layout']}", null, [
+				'data' => $value
+			]);
+		}
+	}
+	?>
+</main><!-- #main -->
 <?php
 get_sidebar();
 get_footer();
