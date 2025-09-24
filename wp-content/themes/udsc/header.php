@@ -48,19 +48,10 @@
 						<span>Пн-Пт 9:00-18:00, Сб 10:00-16:00</span>
 						<div class="flex items-center gap-2 ml-4">
 							<a href="https://vk.com/finshield" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">
-								<svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-									<path d="M12.785 16.241s.288-.032.436-.196c.136-.151.131-.434.131-.434s-.019-1.325.581-1.52c.59-.194 1.348 1.28 2.151 1.846.607.428 1.068.334 1.068.334l2.138-.03s1.119-.072.588-.971c-.043-.074-.308-.664-1.588-1.876-1.339-1.268-1.16-1.063.454-3.246.984-1.33 1.377-2.144 1.253-2.492-.118-.331-.844-.244-.844-.244l-2.406.015s-.178-.025-.31.056c-.125.078-.205.26-.205.26s-.368 1.002-.859 1.855c-1.036 1.804-1.449 1.898-1.619 1.785-.395-.262-.296-1.053-.296-1.613 0-1.755.26-2.489-.507-2.678-.255-.063-.442-.104-1.094-.111-.835-.009-1.541.003-1.942.203-.267.133-.473.431-.347.448.155.021.507.097.693.356.24.334.231 1.084.231 1.084s.138 2.065-.322 2.32c-.316.175-.75-.182-1.681-1.816-.477-.835-.837-1.759-.837-1.759s-.069-.172-.193-.264c-.151-.112-.362-.147-.362-.147l-2.286.015s-.343.01-.468.162c-.111.135-.009.413-.009.413s1.73 4.154 3.689 6.245c1.795 1.915 3.833 1.789 3.833 1.789h.924z"/>
-								</svg>
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hash h-4 w-4" data-lov-id="src\components\Navigation.tsx:63:20" data-lov-name="Hash" data-component-path="src\components\Navigation.tsx" data-component-line="63" data-component-file="Navigation.tsx" data-component-name="Hash" data-component-content="%7B%22className%22%3A%22h-4%20w-4%22%7D"><line x1="4" x2="20" y1="9" y2="9"></line><line x1="4" x2="20" y1="15" y2="15"></line><line x1="10" x2="8" y1="3" y2="21"></line><line x1="16" x2="14" y1="3" y2="21"></line></svg>
 							</a>
 							<a href="https://t.me/finshield" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">
-								<svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-									<path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.568 8.16c-.369 1.966-1.981 6.791-2.803 9.014-.347 1.037-.719 1.387-1.17 1.387-.995 0-1.19-.736-1.19-1.387 0-1.38.736-3.681 1.843-5.938.368-.736 1.59-3.219 1.59-3.68 0-.368-.184-.552-.552-.552-.736 0-2.437 1.104-3.68 2.437-1.104 1.243-1.843 2.437-1.843 3.68 0 1.104.552 2.208 1.659 2.208 1.843 0 4.096-2.208 4.464-5.754.184-1.659-.184-2.803-1.473-2.803-1.104 0-2.437.552-3.68 1.659-.368.368-.552.92-.552 1.473 0 .736.184 1.473.92 1.473 1.243 0 1.843-.552 1.843-1.473 0-.552-.184-1.104-.552-1.473-.184-.184-.368-.368-.368-.552 0-.368.184-.736.552-.736.552 0 1.104.368 1.104 1.104 0 1.104-.552 2.437-1.659 2.437-1.475 0-2.622-1.104-2.622-2.622 0-1.843 1.659-3.317 3.68-3.317 2.208 0 3.68 1.474 3.68 3.68z"/>
-								</svg>
-							</a>
-							<a href="<?php echo esc_url( home_url( '/profile' ) ); ?>" class="hover:text-primary transition-colors">
-								<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-								</svg>
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle h-4 w-4" data-lov-id="src\components\Navigation.tsx:66:20" data-lov-name="MessageCircle" data-component-path="src\components\Navigation.tsx" data-component-line="66" data-component-file="Navigation.tsx" data-component-name="MessageCircle" data-component-content="%7B%22className%22%3A%22h-4%20w-4%22%7D"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>
 							</a>
 						</div>
 					</div>
@@ -72,7 +63,7 @@
 			<div class="container">
 				<div class="flex items-center justify-between">
 					<!-- Logo -->
-					<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center gap-3 min-h-[3rem]">
+					<a href="/" class="flex items-center gap-3 min-h-[3rem]">
 						<svg class="h-8 w-8 text-primary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
 						</svg>
