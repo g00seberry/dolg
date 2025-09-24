@@ -144,7 +144,8 @@ function udsc_scripts() {
 	wp_enqueue_style( 'udsc-style', get_stylesheet_uri(), array('udsc-fonts'), _S_VERSION );
 	wp_style_add_data( 'udsc-style', 'rtl', 'replace' );
 
-	wp_enqueue_script( 'udsc-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
+	// Подключаем модульный JavaScript для мобильного меню
+	wp_enqueue_script( 'udsc-mobile-menu', get_template_directory_uri() . '/assets/js/mobile-menu.js', array(), _S_VERSION, true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
