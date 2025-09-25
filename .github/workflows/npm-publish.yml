@@ -32,6 +32,7 @@ jobs:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: public_html/
       - name: 🔄 Replace 'http://dolg.loc' with 'https://fnshield.ru' in dolg.sql
         run: sed -i 's|http://dolg.loc|https://fnshield.ru|g' dolg.sql
       - name: ⬆️ Update MySQL database
