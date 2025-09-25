@@ -33,6 +33,21 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: public_html/
+          state-name: dolg-deploy-state
+          dry-run: false
+          log-level: minimal
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.github/**
+            **/composer.json
+            **/composer.lock
+            **/README.md
+            **/*.log
+            **/wp-config.php
+            **/.htaccess
+            **/wp-content/cache/**
       - name: 🔄 Replace 'http://dolg.loc' with 'https://fnshield.ru' in dolg.sql
         run: sed -i 's|http://dolg.loc|https://fnshield.ru|g' dolg.sql
       - name: ⬆️ Update MySQL database
