@@ -11,6 +11,7 @@ $hero_image = get_field('hero_image') ?: get_template_directory_uri() . '/assets
 ?>
 
 <!-- Hero Section -->
+ 
 <section class="relative bg-gradient-to-br from-background to-subtle py-16 lg:py-24">
     <div class="container">
         <div class="grid lg:grid-cols-2 gap-12 items-center">
