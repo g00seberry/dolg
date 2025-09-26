@@ -15,7 +15,6 @@ class UDSC_MainNav {
      */
     private static function get_menu_items() {
         return array(
-            array('url' => home_url('/'), 'title' => 'Главная'),
             array('url' => home_url('/services'), 'title' => 'Услуги'),
             array('url' => home_url('/case-studies'), 'title' => 'Кейсы', 'has_count' => true),
             array('url' => home_url('/blog'), 'title' => 'Финщит'),
