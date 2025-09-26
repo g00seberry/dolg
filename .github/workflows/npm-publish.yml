@@ -54,14 +54,6 @@ jobs:
         env:
           MYSQL_PWD: ${{ secrets.MYSQL_PASS }}
         run: |
-          # Test MySQL connection first
-          echo "Testing MySQL connection..."
-          mysql -h ${{ secrets.MYSQL_HOST }} -P 3306 -u ${{ secrets.MYSQL_USER }} -D ${{ secrets.MYSQL_DB }} -e "SELECT 1;" || {
-            echo "MySQL connection failed. Please check your credentials and server access."
-            exit 1
-          }
-
-          # Import the database
-          echo "Importing database..."
-          mysql -h ${{ secrets.MYSQL_HOST }} -P 3306 -u ${{ secrets.MYSQL_USER }} -D ${{ secrets.MYSQL_DB }} < dolg.sql
-          echo "Database import completed successfully."
+          mysql -h ${{ secrets.MYSQL_HOST }} -P 3306 -u ${{ secrets.MYSQL_USER }} \
+                --default-auth=mysql_native_password --ssl-mode=DISABLED \
+                -D ${{ secrets.MYSQL_DB }} < dolg.sql
