@@ -51,5 +51,17 @@ jobs:
       - name: 🔄 Replace 'http://dolg.loc' with 'https://fnshield.ru' in dolg.sql
         run: sed -i 's|http://dolg.loc|https://fnshield.ru|g' dolg.sql
       - name: ⬆️ Update MySQL database
+        env:
+          MYSQL_PWD: ${{ secrets.MYSQL_PASS }}
         run: |
-          mysql -P 3306 -h ${{ secrets.MYSQL_HOST }} -u ${{ secrets.MYSQL_USER }} --password=${{ secrets.MYSQL_PASS }} -D ${{ secrets.MYSQL_DB }} < dolg.sql
+          # Test MySQL connection first
+          echo "Testing MySQL connection..."
+          mysql -h ${{ secrets.MYSQL_HOST }} -P 3306 -u ${{ secrets.MYSQL_USER }} -D ${{ secrets.MYSQL_DB }} -e "SELECT 1;" || {
+            echo "MySQL connection failed. Please check your credentials and server access."
+            exit 1
+          }
+
+          # Import the database
+          echo "Importing database..."
+          mysql -h ${{ secrets.MYSQL_HOST }} -P 3306 -u ${{ secrets.MYSQL_USER }} -D ${{ secrets.MYSQL_DB }} < dolg.sql
+          echo "Database import completed successfully."
