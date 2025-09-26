@@ -229,7 +229,10 @@ class UDSC_MainNav {
                     <?php 
                     // Ensure Logo component is loaded
                     if (!class_exists('UDSC_Logo')) {
-                        require_once get_template_directory() . '/inc/components/Logo.php';
+                        $logo_file = get_template_directory() . '/inc/components/Logo.php';
+                        if (file_exists($logo_file)) {
+                            require_once $logo_file;
+                        }
                     }
                     echo UDSC_Logo::render(); 
                     ?>

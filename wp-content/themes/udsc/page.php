@@ -19,9 +19,19 @@ $sections = get_field('blocks');
 	<?php
 	if ($sections) {
 		foreach ($sections as $value) {
-			get_template_part("blocks/{$value['acf_fc_layout']}", null, [
-				'data' => $value
-			]);
+			// Безопасное подключение блоков с проверкой существования файла
+			$block_name = sanitize_file_name($value['acf_fc_layout']);
+			$block_file = get_template_directory() . "/blocks/{$block_name}.php";
+			
+			if (file_exists($block_file)) {
+				get_template_part("blocks/{$block_name}", null, [
+					'data' => $value
+				]);
+			} else {
+				// Логируем отсутствующий блок для отладки
+				error_log("UDSC Theme: Block file not found: {$block_file}");
+				echo "<!-- Block '{$block_name}' not found -->";
+			}
 		}
 	}
 	?>

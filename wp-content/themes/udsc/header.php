@@ -12,10 +12,16 @@
 
 // Ensure required components are loaded
 if (!class_exists('UDSC_ContactBar')) {
-    require_once get_template_directory() . '/inc/components/ContactBar.php';
+    $contact_bar_file = get_template_directory() . '/inc/components/ContactBar.php';
+    if (file_exists($contact_bar_file)) {
+        require_once $contact_bar_file;
+    }
 }
 if (!class_exists('UDSC_MainNav')) {
-    require_once get_template_directory() . '/MainNav.php';
+    $main_nav_file = get_template_directory() . '/MainNav.php';
+    if (file_exists($main_nav_file)) {
+        require_once $main_nav_file;
+    }
 }
 ?>
 <!doctype html>

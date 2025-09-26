@@ -237,3 +237,48 @@ function udsc_flush_rewrite_rules() {
 }
 add_action( 'after_switch_theme', 'udsc_flush_rewrite_rules' );
 
+/**
+ * Safe template part loader for Linux compatibility
+ * Handles case-sensitivity issues and missing templates
+ */
+function udsc_safe_get_template_part($template_name, $name = null, $args = array()) {
+    $templates = array();
+    
+    if (isset($name)) {
+        $templates[] = "{$template_name}-{$name}.php";
+    }
+    $templates[] = "{$template_name}.php";
+    
+    foreach ($templates as $template) {
+        $template_file = locate_template($template);
+        
+        if ($template_file && file_exists($template_file)) {
+            if (!empty($args) && is_array($args)) {
+                extract($args);
+            }
+            include $template_file;
+            return true;
+        }
+    }
+    
+    // Log missing template if debug is enabled
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        error_log("UDSC Theme: Template not found: " . implode(', ', $templates));
+    }
+    echo "<!-- Template not found: " . esc_html($template_name) . " -->";
+    return false;
+}
+
+/**
+ * Enhanced error logging for production debugging
+ */
+function udsc_log_error($message, $context = '') {
+    if (defined('WP_DEBUG_LOG') && WP_DEBUG_LOG) {
+        $log_message = '[UDSC Theme] ' . $message;
+        if ($context) {
+            $log_message .= ' Context: ' . $context;
+        }
+        error_log($log_message);
+    }
+}
+
