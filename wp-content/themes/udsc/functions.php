@@ -203,6 +203,7 @@ if ( defined( 'JETPACK__VERSION' ) ) {
  * Load theme components
  */
 require get_template_directory() . '/inc/components/Modal.php';
+require get_template_directory() . '/inc/components/TestForm.php';
 
 /**
  * Register Case Study Custom Post Type for the financial service theme
