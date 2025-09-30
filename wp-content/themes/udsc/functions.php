@@ -147,6 +147,13 @@ function udsc_scripts() {
 	wp_enqueue_style( 'udsc-style', get_stylesheet_uri(), array('udsc-fonts'), _S_VERSION );
 	wp_style_add_data( 'udsc-style', 'rtl', 'replace' );
 
+	// Подключаем скомпилированный JS с Material Tailwind
+	$asset_file = get_template_directory() . '/assets/js/index.asset.php';
+	if ( file_exists( $asset_file ) ) {
+		$asset = include $asset_file;
+		wp_enqueue_script( 'udsc-main', get_template_directory_uri() . '/assets/js/index.js', $asset['dependencies'], $asset['version'], true );
+	}
+	
 	// Подключаем модульный JavaScript для мобильного меню
 	wp_enqueue_script( 'udsc-mobile-menu', get_template_directory_uri() . '/assets/js/mobile-menu.js', array(), _S_VERSION, true );
 

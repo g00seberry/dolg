@@ -5,8 +5,9 @@ module.exports = {
     "./template-parts/**/*.php",
     "./blocks/**/*.php",
     "./inc/**/*.php",
-    "./js/**/*.js",
+    "./src/**/*.js",
     "./src/**/*.css",
+    "./node_modules/@material-tailwind/html/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     container: {
