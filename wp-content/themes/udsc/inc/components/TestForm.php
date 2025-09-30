@@ -38,18 +38,9 @@ class UDSC_TestForm {
         ob_start();
         ?>
         <!-- Sticky Header -->
-        <div class="bg-gradient-to-r from-primary to-primary-hover text-white p-6 rounded-t-xl sticky top-0 z-50 shadow-lg transition-all duration-300" id="<?php echo esc_attr($id); ?>_header">
+        <div class="bg-gradient-to-r from-primary to-primary-hover text-white p-6 rounded-t-xl shadow-lg transition-all duration-300" id="<?php echo esc_attr($id); ?>_header">
             <h2 class="text-2xl font-bold mb-2"><?php echo esc_html($title); ?></h2>
-            <p class="text-white/80 text-sm mb-4">Ответьте на несколько вопросов, чтобы узнать свои перспективы</p>
-            
-            <!-- Progress Bar -->
-            <div class="flex justify-between text-xs text-white/70 mb-2">
-                <span>Прогресс</span>
-                <span id="<?php echo esc_attr($id); ?>_progress">0%</span>
-            </div>
-            <div class="w-full bg-white/20 rounded-full h-2">
-                <div id="<?php echo esc_attr($id); ?>_bar" class="bg-white h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
-            </div>
+            <p class="text-white/80 text-sm">Ответьте на несколько вопросов, чтобы узнать свои перспективы</p>
         </div>
         
         <!-- Form Container -->
@@ -234,67 +225,24 @@ class UDSC_TestForm {
         <script>
         (function() {
             const form = document.getElementById('<?php echo esc_attr($id); ?>');
-            const progressBar = document.getElementById('<?php echo esc_attr($id); ?>_bar');
-            const progressText = document.getElementById('<?php echo esc_attr($id); ?>_progress');
             const header = document.getElementById('<?php echo esc_attr($id); ?>_header');
             
-            if (!form || !progressBar || !progressText) return;
-            
-            // Progress tracking
-            function updateProgress() {
-                // Manually count the 5 questions instead of relying on [required] fields
-                let filledCount = 0;
-                
-                // Question 1: Debt amount
-                const debtAmount = form.querySelector('[name="debt_amount"]');
-                if (debtAmount && debtAmount.value.trim()) filledCount++;
-                
-                // Question 2: Property (any checkbox checked)
-                const propertyCheckboxes = form.querySelectorAll('[name="property[]"]:checked');
-                if (propertyCheckboxes.length > 0) filledCount++;
-                
-                // Question 3: Transactions
-                const transactions = form.querySelector('[name="transactions"]');
-                if (transactions && transactions.value.trim()) filledCount++;
-                
-                // Question 4: Income (radio button checked)
-                const income = form.querySelector('[name="has_income"]:checked');
-                if (income) filledCount++;
-                
-                // Question 5: Criminal record (radio button checked)
-                const criminalRecord = form.querySelector('[name="criminal_record"]:checked');
-                if (criminalRecord) filledCount++;
-                
-                // Total questions = 5
-                const totalQuestions = 5;
-                
-                const progress = Math.round((filledCount / totalQuestions) * 100);
-                progressBar.style.width = progress + '%';
-                progressText.textContent = progress + '%';
-                
-                if (progress >= 100) {
-                    progressBar.classList.add('bg-green-400');
-                    progressText.textContent = '✓ Готово';
-                } else {
-                    progressBar.classList.remove('bg-green-400');
-                }
-            }
+            if (!form) return;
             
             // Sticky header effect
-            let originalTop = header.offsetTop;
-            function handleScroll() {
-                const scrollTop = window.pageYOffset;
-                if (scrollTop >= originalTop) {
-                    header.classList.add('shadow-2xl');
-                } else {
-                    header.classList.remove('shadow-2xl');
+            if (header) {
+                let originalTop = header.offsetTop;
+                function handleScroll() {
+                    const scrollTop = window.pageYOffset;
+                    if (scrollTop >= originalTop) {
+                        header.classList.add('shadow-2xl');
+                    } else {
+                        header.classList.remove('shadow-2xl');
+                    }
                 }
+                window.addEventListener('scroll', handleScroll);
+                handleScroll(); // Initial call
             }
-            
-            // Event listeners
-            form.addEventListener('input', updateProgress);
-            form.addEventListener('change', updateProgress);
-            window.addEventListener('scroll', handleScroll);
             
             // Form submission
             form.addEventListener('submit', function(e) {
@@ -317,10 +265,6 @@ class UDSC_TestForm {
                     submitBtn.innerHTML = originalText;
                 }, 2000);
             });
-            
-            // Initial calls
-            updateProgress();
-            handleScroll();
         })();
         </script>
         <?php
