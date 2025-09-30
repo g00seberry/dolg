@@ -13,12 +13,13 @@ class UDSC_ContactBar {
      */
     private static function get_contact_info() {
         return array(
-            'phone' => '+79910042077',
-            'email' => 'fnshield@yandex.ru',
-            'hours' => 'Пн-Пт 9:00-18:00, Сб 10:00-16:00',
+            'phone' => udsc_get_contact_phone(),
+            'email' => udsc_get_contact_email(),
+            'hours' => udsc_get_contact_hours(),
             'social' => array(
-                'vk' => 'https://vk.com/finshield',
-                'telegram' => 'https://t.me/finshield'
+                'vk' => udsc_get_contact_vk(),
+                'telegram' => udsc_get_contact_telegram(),
+                'whatsapp' => udsc_get_contact_whatsapp()
             )
         );
     }
@@ -52,6 +53,13 @@ class UDSC_ContactBar {
     }
 
     /**
+     * Render WhatsApp icon
+     */
+    private static function get_whatsapp_icon() {
+        return '<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>';
+    }
+
+    /**
      * Render contact bar
      */
     public static function render() {
@@ -82,18 +90,32 @@ class UDSC_ContactBar {
                     <div class="hidden md:flex items-center gap-4">
                         <span><?php echo esc_html($contact['hours']); ?></span>
                         <div class="flex items-center gap-2 ml-4">
+                            <?php if (!empty($contact['social']['vk'])): ?>
                             <a href="<?php echo esc_url($contact['social']['vk']); ?>" 
                                target="_blank" rel="noopener noreferrer" 
                                class="hover:text-primary transition-colors"
                                aria-label="Перейти в ВКонтакте">
                                 <?php echo self::get_vk_icon(); ?>
                             </a>
+                            <?php endif; ?>
+                            
+                            <?php if (!empty($contact['social']['telegram'])): ?>
                             <a href="<?php echo esc_url($contact['social']['telegram']); ?>" 
                                target="_blank" rel="noopener noreferrer" 
                                class="hover:text-primary transition-colors"
                                aria-label="Перейти в Telegram">
                                 <?php echo self::get_telegram_icon(); ?>
                             </a>
+                            <?php endif; ?>
+                            
+                            <?php if (!empty($contact['social']['whatsapp'])): ?>
+                            <a href="<?php echo esc_url($contact['social']['whatsapp']); ?>" 
+                               target="_blank" rel="noopener noreferrer" 
+                               class="hover:text-primary transition-colors"
+                               aria-label="Написать в WhatsApp">
+                                <?php echo self::get_whatsapp_icon(); ?>
+                            </a>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

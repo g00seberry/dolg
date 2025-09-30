@@ -7,7 +7,7 @@
 // Получаем данные блока (если используется ACF или аналогичные поля)
 $section_title = get_field('cities_title') ?: 'География нашей работы';
 $section_description = get_field('cities_description') ?: 'Мы работаем во всех крупных городах России и оказываем юридическую помощь по банкротству';
-$consultation_phone = get_field('consultation_phone') ?: 'tel:+7-991-004-20-77';
+$consultation_phone = get_field('consultation_phone') ?: 'tel:' . udsc_get_contact_phone();
 
 // Список городов (47 городов из оригинала)
 $cities = get_field('cities_list') ?: [
