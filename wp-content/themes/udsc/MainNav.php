@@ -82,11 +82,9 @@ class UDSC_MainNav {
             'w-full bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-3 rounded-lg font-medium transition-colors' :
             'bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-3 rounded-lg font-medium transition-colors';
         
-        $onclick = "window.location.href='" . esc_url(home_url('/contacts')) . "#consultation'";
-        
         ob_start();
         ?>
-        <button class="<?php echo esc_attr($classes); ?>" onclick="<?php echo esc_attr($onclick); ?>">
+        <button class="<?php echo esc_attr($classes); ?>" data-target="#consultation-modal">
             Бесплатная консультация
         </button>
         <?php

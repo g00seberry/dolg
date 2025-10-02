@@ -183,7 +183,18 @@
 		</div>
 	</footer><!-- #colophon -->
 </div><!-- #page -->
-
+<?php
+// Модальное окно с формой консультации
+echo UDSC_Modal::create(array(
+    'id' => 'consultation-modal',
+    'title' => 'Запись на консультацию',
+    'content' => UDSC_ConsultationForm::create('consultation-modal-form', ''),
+    'size' => 'md',
+    'show_header' => true,
+    'show_footer' => false,
+    'body_classes' => 'p-0'
+));
+?>
 <?php wp_footer(); ?>
 
 </body>

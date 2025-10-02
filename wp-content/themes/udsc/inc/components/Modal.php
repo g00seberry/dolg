@@ -171,7 +171,7 @@ class UDSC_Modal {
                 <?php if (!empty($args['content'])): ?>
                 <div class="<?php echo esc_attr('p-4 text-slate-600 ' . $args['body_classes']); ?>"
                      id="<?php echo esc_attr($args['id'] . '-content'); ?>">
-                    <?php echo wp_kses_post($args['content']); ?>
+                    <?php echo $args['content']; ?>
                 </div>
                 <?php endif; ?>
                 

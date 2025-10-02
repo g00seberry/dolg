@@ -64,11 +64,14 @@ $achievements = get_field('achievements') ?: [
                 </div>
 
                 <!-- CTA Button -->
-                <a href="<?php echo esc_url($consultation_link); ?>" 
+                <button type="button"
+                   data-toggle="modal" data-target="#consultation-modal"
                    class="inline-flex items-center justify-center whitespace-nowrap h-11 rounded-md px-8 text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
                     Записаться на консультацию
-                </a>
+                </button>
             </div>
         </div>
     </div>
 </section>
+
+
