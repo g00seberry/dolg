@@ -18,11 +18,16 @@ module.exports = (env, argv) => {
       hot: false,
       liveReload: true,
       port: 3000,
+      allowedHosts: "all",
       devMiddleware: {
         writeToDisk: true
       },
       proxy: {
-        "/": "http://dolg.loc"
+        "/": {
+          target: "http://dolg.loc",
+          changeOrigin: true,
+          secure: false
+        }
       }
     } : undefined,
     module: {
