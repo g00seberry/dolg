@@ -11,7 +11,7 @@
 
 ?>
 
-	<footer class="bg-muted/30 border-t border-border mt-16 overflow-hidden">
+	<footer class="bg-muted/30 border-t border-border overflow-hidden">
 		<div class="container py-12">
 			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
 				<!-- Company Info -->

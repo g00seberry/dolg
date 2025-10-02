@@ -243,7 +243,9 @@ $json_ld = [
                         <p class="text-sm text-muted-foreground mb-4">
                             Получите бесплатную консультацию по вашей ситуации
                         </p>
-                        <button class="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+                        <button 
+                        data-toggle="modal" data-target="#consultation-modal"
+                        class="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
                             Получить консультацию
                         </button>
                     </div>
@@ -308,7 +310,9 @@ $json_ld = [
                 Получите бесплатную консультацию и узнайте, как решить свои финансовые проблемы
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <button class="bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+                <button 
+                data-toggle="modal" data-target="#consultation-modal"
+                class="bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
                     Бесплатная консультация
                 </button>
                 <a href="<?php echo get_post_type_archive_link('case_study'); ?>" 
