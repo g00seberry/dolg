@@ -84,7 +84,7 @@ class UDSC_MainNav {
         
         ob_start();
         ?>
-        <button class="<?php echo esc_attr($classes); ?>" data-target="#consultation-modal">
+        <button class="<?php echo esc_attr($classes); ?>" data-toggle="modal" data-target="#consultation-modal">
             Бесплатная консультация
         </button>
         <?php
