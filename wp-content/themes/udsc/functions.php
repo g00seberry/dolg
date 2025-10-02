@@ -203,44 +203,6 @@ require get_template_directory() . '/inc/components/Modal.php';
 require get_template_directory() . '/inc/components/TestForm.php';
 require get_template_directory() . '/inc/components/ConsultationForm.php';
 
-/**
- * Register Case Study Custom Post Type for the financial service theme
- */
-function udsc_register_case_study_post_type() {
-	$args = array(
-		'public'             => true,
-		'publicly_queryable' => true,
-		'show_ui'            => true,
-		'show_in_menu'       => true,
-		'query_var'          => true,
-		'rewrite'            => array( 'slug' => 'case-studies' ),
-		'capability_type'    => 'post',
-		'has_archive'        => true,
-		'hierarchical'       => false,
-		'menu_position'      => null,
-		'menu_icon'          => 'dashicons-portfolio',
-		'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' ),
-		'labels'             => array(
-			'name'               => _x( 'Кейсы', 'post type general name', 'udsc' ),
-			'singular_name'      => _x( 'Кейс', 'post type singular name', 'udsc' ),
-			'menu_name'          => _x( 'Кейсы', 'admin menu', 'udsc' ),
-			'name_admin_bar'     => _x( 'Кейс', 'add new on admin bar', 'udsc' ),
-			'add_new'            => _x( 'Добавить новый', 'case study', 'udsc' ),
-			'add_new_item'       => __( 'Добавить новый кейс', 'udsc' ),
-			'new_item'           => __( 'Новый кейс', 'udsc' ),
-			'edit_item'          => __( 'Редактировать кейс', 'udsc' ),
-			'view_item'          => __( 'Просмотреть кейс', 'udsc' ),
-			'all_items'          => __( 'Все кейсы', 'udsc' ),
-			'search_items'       => __( 'Искать кейсы', 'udsc' ),
-			'parent_item_colon'  => __( 'Родительские кейсы:', 'udsc' ),
-			'not_found'          => __( 'Кейсы не найдены.', 'udsc' ),
-			'not_found_in_trash' => __( 'В корзине кейсы не найдены.', 'udsc' ),
-		),
-	);
-
-	register_post_type( 'case_study', $args );
-}
-add_action( 'init', 'udsc_register_case_study_post_type' );
 
 /**
  * Flush rewrite rules when the theme is activated
@@ -296,3 +258,36 @@ function udsc_log_error($message, $context = '') {
     }
 }
 
+
+
+// Регистрируем кастомный тип записи "Кейсы"
+function register_case_study_cpt() {
+    $labels = array(
+        'name'               => 'Кейсы',
+        'singular_name'      => 'Кейс',
+        'menu_name'          => 'Кейсы',
+        'name_admin_bar'     => 'Кейс',
+        'add_new'            => 'Добавить кейс',
+        'add_new_item'       => 'Добавить новый кейс',
+        'new_item'           => 'Новый кейс',
+        'edit_item'          => 'Редактировать кейс',
+        'view_item'          => 'Просмотреть кейс',
+        'all_items'          => 'Все кейсы',
+        'search_items'       => 'Искать кейсы',
+        'not_found'          => 'Кейсы не найдены',
+        'not_found_in_trash' => 'В корзине кейсов нет',
+    );
+
+    $args = array(
+        'labels'             => $labels,
+        'public'             => true,
+        'has_archive'        => true,
+        'rewrite'            => array('slug' => 'case-studies'),
+        'menu_icon'          => 'dashicons-portfolio',
+        'supports'           => array('title', 'editor', 'thumbnail', 'excerpt'),
+        'show_in_rest'       => true, // поддержка Gutenberg + API
+    );
+
+    register_post_type('case_study', $args);
+}
+add_action('init', 'register_case_study_cpt');
