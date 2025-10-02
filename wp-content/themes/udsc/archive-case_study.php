@@ -130,6 +130,10 @@ $json_ld = [
                         ?>
                     <?php endforeach; ?>
                 </div>
+                <?php
+                // Добавляем пагинацию
+                echo $filter->render_pagination([], 1, 6);
+                ?>
             </div>
         </div>
     </section>

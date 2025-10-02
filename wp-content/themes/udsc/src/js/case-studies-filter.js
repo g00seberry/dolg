@@ -7,6 +7,9 @@
   "use strict";
 
   const CaseStudiesFilter = {
+    currentPage: 1,
+    currentFilters: {},
+
     init: function () {
       this.bindEvents();
       this.loadInitialData();
@@ -18,6 +21,13 @@
 
       // Reset filters button
       $("#reset-filters").on("click", this.resetFilters.bind(this));
+
+      // Pagination buttons
+      $(document).on(
+        "click",
+        ".pagination-btn",
+        this.handlePagination.bind(this)
+      );
     },
 
     loadInitialData: function () {
@@ -35,12 +45,60 @@
         return;
       }
 
+      // Reset to first page when applying filters
+      this.currentPage = 1;
+
       const formData = {
         action: "filter_case_studies",
         nonce: udsc_ajax.nonce,
         year: $('select[name="year"]').val(),
         region: $('select[name="region"]').val(),
         debt_range: $('select[name="debt_range"]').val(),
+        page: this.currentPage,
+      };
+
+      // Store current filters
+      this.currentFilters = {
+        year: formData.year,
+        region: formData.region,
+        debt_range: formData.debt_range,
+      };
+
+      // Show loading state
+      this.showLoading();
+
+      $.ajax({
+        url: udsc_ajax.ajax_url,
+        type: "POST",
+        data: formData,
+        success: this.handleSuccess.bind(this),
+        error: this.handleError.bind(this),
+      });
+    },
+
+    handlePagination: function (e) {
+      e.preventDefault();
+
+      const page = parseInt($(e.target).data("page"));
+      if (page && page !== this.currentPage) {
+        this.currentPage = page;
+        this.loadPage(page);
+      }
+    },
+
+    loadPage: function (page) {
+      if (typeof udsc_ajax === "undefined") {
+        console.error("udsc_ajax is not defined");
+        return;
+      }
+
+      const formData = {
+        action: "filter_case_studies",
+        nonce: udsc_ajax.nonce,
+        year: this.currentFilters.year || "all",
+        region: this.currentFilters.region || "all",
+        debt_range: this.currentFilters.debt_range || "all",
+        page: page,
       };
 
       // Show loading state
@@ -71,6 +129,20 @@
 
         // Update cases grid
         $(".cases-grid-container").html(response.html);
+
+        // Update pagination if available
+        if (response.pagination) {
+          // Find and replace pagination
+          const $container = $(".cases-grid-container");
+          const $existingPagination = $container.find(
+            ".flex.items-center.justify-center.gap-2"
+          );
+          if ($existingPagination.length) {
+            $existingPagination.replaceWith(response.pagination);
+          } else {
+            $container.append(response.pagination);
+          }
+        }
 
         // Scroll to cases section
         $("html, body").animate(

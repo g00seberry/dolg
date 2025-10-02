@@ -99,10 +99,11 @@ class UDSC_Case_Studies_Filter {
     /**
      * Filter cases based on parameters
      */
-    public function filter_cases($filters = []) {
+    public function filter_cases($filters = [], $page = 1, $per_page = 6) {
         $args = [
             'post_type' => $this->post_type,
-            'posts_per_page' => -1,
+            'posts_per_page' => $per_page,
+            'paged' => $page,
             'post_status' => 'publish',
             'meta_query' => []
         ];
@@ -156,6 +157,130 @@ class UDSC_Case_Studies_Filter {
     }
     
     /**
+     * Get total count of cases matching filters
+     */
+    public function get_cases_count($filters = []) {
+        $args = [
+            'post_type' => $this->post_type,
+            'posts_per_page' => -1,
+            'post_status' => 'publish',
+            'meta_query' => [],
+            'fields' => 'ids'
+        ];
+        
+        // Apply same filters as filter_cases but without pagination
+        if (!empty($filters['year']) && $filters['year'] !== 'all') {
+            $args['meta_query'][] = [
+                'key' => 'case_end_date',
+                'value' => $filters['year'],
+                'compare' => 'LIKE'
+            ];
+        }
+        
+        if (!empty($filters['region']) && $filters['region'] !== 'all') {
+            $args['meta_query'][] = [
+                'key' => 'case_region',
+                'value' => $filters['region'],
+                'compare' => '='
+            ];
+        }
+        
+        if (isset($filters['debt_range']) && $filters['debt_range'] !== 'all' && $filters['debt_range'] !== '') {
+            $debt_ranges = $this->get_debt_ranges();
+            $range_index = intval($filters['debt_range']);
+            
+            if (isset($debt_ranges[$range_index])) {
+                $range = $debt_ranges[$range_index];
+                
+                if ($range['max'] == PHP_INT_MAX) {
+                    $args['meta_query'][] = [
+                        'key' => 'case_debt_amount',
+                        'value' => $range['min'],
+                        'compare' => '>=',
+                        'type' => 'NUMERIC'
+                    ];
+                } else {
+                    $args['meta_query'][] = [
+                        'key' => 'case_debt_amount',
+                        'value' => [$range['min'], $range['max']],
+                        'compare' => 'BETWEEN',
+                        'type' => 'NUMERIC'
+                    ];
+                }
+            }
+        }
+        
+        $posts = get_posts($args);
+        return count($posts);
+    }
+    
+    /**
+     * Generate pagination HTML
+     */
+    public function render_pagination($filters = [], $current_page = 1, $per_page = 6) {
+        $total_cases = $this->get_cases_count($filters);
+        $total_pages = ceil($total_cases / $per_page);
+        
+        if ($total_pages <= 1) {
+            return '';
+        }
+        
+        ob_start();
+        ?>
+        <div class="flex items-center justify-center gap-2 mt-8">
+            <?php if ($current_page > 1): ?>
+                <button type="button" 
+                        class="pagination-btn px-3 py-2 text-sm border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md transition-colors"
+                        data-page="<?php echo $current_page - 1; ?>">
+                    ← Назад
+                </button>
+            <?php endif; ?>
+            
+            <div class="flex space-x-1 gap-2">
+                <?php
+                $start_page = max(1, $current_page - 2);
+                $end_page = min($total_pages, $current_page + 2);
+                
+                if ($start_page > 1): ?>
+                    <button type="button" 
+                            class="pagination-btn px-3 py-2 text-sm border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md transition-colors"
+                            data-page="1">1</button>
+                    <?php if ($start_page > 2): ?>
+                        <span class="px-3 py-2 text-sm text-muted-foreground">...</span>
+                    <?php endif; ?>
+                <?php endif; ?>
+                
+                <?php for ($i = $start_page; $i <= $end_page; $i++): ?>
+                    <button type="button" 
+                            class="pagination-btn px-3 py-2 text-sm border rounded-md transition-colors <?php echo $i == $current_page ? 'bg-primary text-primary-foreground' : 'border-input bg-background hover:bg-accent hover:text-accent-foreground'; ?>"
+                            data-page="<?php echo $i; ?>">
+                        <?php echo $i; ?>
+                    </button>
+                <?php endfor; ?>
+                
+                <?php if ($end_page < $total_pages): ?>
+                    <?php if ($end_page < $total_pages - 1): ?>
+                        <span class="px-3 py-2 text-sm text-muted-foreground">...</span>
+                    <?php endif; ?>
+                    <button type="button" 
+                            class="pagination-btn px-3 py-2 text-sm border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md transition-colors"
+                            data-page="<?php echo $total_pages; ?>"><?php echo $total_pages; ?></button>
+                <?php endif; ?>
+            </div>
+            
+            <?php if ($current_page < $total_pages): ?>
+                <button type="button" 
+                        class="pagination-btn px-3 py-2 text-sm border border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-md transition-colors"
+                        data-page="<?php echo $current_page + 1; ?>">
+                    Вперед →
+                </button>
+            <?php endif; ?>
+        </div>
+        <?php
+        return ob_get_clean();
+    }
+    
+    /**
      * Get case statistics
      */
     public function get_statistics() {
@@ -206,13 +331,22 @@ class UDSC_Case_Studies_Filter {
             'debt_range' => sanitize_text_field($_POST['debt_range'] ?? 'all')
         ];
         
-        $filtered_cases = $this->filter_cases($filters);
+        // Get pagination parameters
+        $page = intval($_POST['page'] ?? 1);
+        $per_page = 6; // Количество кейсов на странице
+        
+        // Get filtered cases with pagination
+        $filtered_cases = $this->filter_cases($filters, $page, $per_page);
+        $total_cases = $this->get_cases_count($filters);
         
         // Prepare response data
         $response = [
             'success' => true,
-            'count' => count($filtered_cases),
-            'html' => $this->render_cases_grid($filtered_cases)
+            'count' => $total_cases,
+            'page' => $page,
+            'total_pages' => ceil($total_cases / $per_page),
+            'html' => $this->render_cases_grid($filtered_cases),
+            'pagination' => $this->render_pagination($filters, $page, $per_page)
         ];
         
         wp_send_json($response);
