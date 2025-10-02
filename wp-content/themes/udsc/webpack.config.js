@@ -1,13 +1,22 @@
-const defaultConfig = require("@wordpress/scripts/config/webpack.config");
 const path = require("path");
-const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 
 module.exports = (env, argv) => {
   const isDevelopment = argv.mode === "development";
 
-  const devServer = {
+  const devServerConf = {
     static: "./dist",
     hot: true,
+    port: 3000,
+    open: false,
+    watchFiles: ["src/js/**/*.js", "src/**/*.css", "**/*.php"],
+    proxy: {
+      "/": {
+        target: "http://dolg.loc",
+        changeOrigin: true,
+        secure: false,
+        logLevel: "debug",
+      },
+    },
   };
 
   return {
@@ -17,10 +26,18 @@ module.exports = (env, argv) => {
       index: path.resolve(process.cwd(), "src/js", "index.js"),
     },
     output: {
-      path: path.resolve(process.cwd(), "dist"),
+      path: path.resolve(process.cwd(), "dist/js"),
       filename: "[name].js",
+      clean: true,
     },
-
+    devServer: isDevelopment ? devServerConf : undefined,
+    watchOptions: isDevelopment
+      ? {
+          poll: 1000,
+          aggregateTimeout: 300,
+          ignored: /node_modules/,
+        }
+      : undefined,
     module: {
       rules: [
         {
@@ -35,6 +52,5 @@ module.exports = (env, argv) => {
         },
       ],
     },
-    plugins: [],
   };
 };
