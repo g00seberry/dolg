@@ -10,6 +10,9 @@
 // Подключаем админские настройки контактов
 require_once get_template_directory() . '/inc/admin/contact-settings.php';
 
+// Подключаем класс фильтрации кейсов
+require_once get_template_directory() . '/includes/class-case-studies-filter.php';
+
 if ( ! defined( '_S_VERSION' ) ) {
 	// Replace the version number of the theme on each release.
 	define( '_S_VERSION', '1.0.0' );
@@ -147,11 +150,16 @@ function udsc_scripts() {
 	wp_enqueue_style( 'udsc-style', get_stylesheet_uri(), array('udsc-fonts'), _S_VERSION );
 	wp_style_add_data( 'udsc-style', 'rtl', 'replace' );
 
+	// Подключаем jQuery
+	wp_enqueue_script( 'jquery' );
+
 	// Подключаем скомпилированный JS с Material Tailwind
 	$asset_file = get_template_directory() . '/dist/index.dist.php';
 	if ( file_exists( $asset_file ) ) {
 		$asset = include $asset_file;
-		wp_enqueue_script( 'udsc-main', get_template_directory_uri() . '/dist/js/index.js', $asset['dependencies'], $asset['version'], true );
+		// Добавляем jQuery как зависимость
+		$dependencies = array_merge($asset['dependencies'], ['jquery']);
+		wp_enqueue_script( 'udsc-main', get_template_directory_uri() . '/dist/js/index.js', $dependencies, $asset['version'], true );
 	}
 	
 	// if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {

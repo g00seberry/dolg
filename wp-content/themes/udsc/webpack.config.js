@@ -30,6 +30,9 @@ module.exports = (env, argv) => {
         }
       }
     } : undefined,
+    externals: {
+      jquery: 'jQuery'
+    },
     module: {
       rules: [
         {
