@@ -61,3 +61,4 @@ document.addEventListener("DOMContentLoaded", function () {
     new ConsultationFormHandler(form.id);
   });
 });
+console.log("Consultation form loaded"); 
