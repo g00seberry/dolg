@@ -220,53 +220,6 @@ class UDSC_TestForm {
                 </div>
             </div>
         </div>
-        
-        <!-- Simple JavaScript -->
-        <script>
-        (function() {
-            const form = document.getElementById('<?php echo esc_attr($id); ?>');
-            const header = document.getElementById('<?php echo esc_attr($id); ?>_header');
-            
-            if (!form) return;
-            
-            // Sticky header effect
-            if (header) {
-                let originalTop = header.offsetTop;
-                function handleScroll() {
-                    const scrollTop = window.pageYOffset;
-                    if (scrollTop >= originalTop) {
-                        header.classList.add('shadow-2xl');
-                    } else {
-                        header.classList.remove('shadow-2xl');
-                    }
-                }
-                window.addEventListener('scroll', handleScroll);
-                handleScroll(); // Initial call
-            }
-            
-            // Form submission
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const submitBtn = document.querySelector('button[form="<?php echo esc_attr($id); ?>"]') || 
-                                document.querySelector('#<?php echo esc_attr($id); ?> button[type="submit"]');
-                
-                if (!submitBtn) return;
-                
-                const originalText = submitBtn.innerHTML;
-                
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<svg class="animate-spin w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Анализируем...';
-                
-                // Simulate processing
-                setTimeout(() => {
-                    alert('Спасибо за прохождение теста! Свяжемся с вами в ближайшее время.');
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalText;
-                }, 2000);
-            });
-        })();
-        </script>
         <?php
         
         return ob_get_clean();

@@ -43,9 +43,9 @@
   },
   "scripts": {
     "build:css": "tailwindcss -i ./src/style.css -o ./style.css --minify",
-    "build:js": "wp-scripts build src/index.js --output-path=assets/js",
+    "build:js": "wp-scripts build src/index.js --output-path=dist/js",
     "watch:css": "tailwindcss -i ./src/style.css -o ./style.css --watch",
-    "watch:js": "wp-scripts start src/index.js --output-path=assets/js --mode=development",
+    "watch:js": "wp-scripts start src/index.js --output-path=dist/js --mode=development",
     "build:rtl": "rtlcss style.css style-rtl.css",
     "build": "npm run build:css && npm run build:js",
     "dev": "npm run watch:css & npm run watch:js",

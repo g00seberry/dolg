@@ -1,5 +1,7 @@
 import { initMaterialTailwind } from "@material-tailwind/html";
-import "./js/consultation-form.js";
+import "./consultation-form.js";
+import "./test-form.js";
+import "./mobile-menu.js";
 
 // Initialize all components in your app
 initMaterialTailwind();
