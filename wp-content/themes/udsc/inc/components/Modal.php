@@ -40,37 +40,6 @@ class UDSC_Modal {
     }
     
     /**
-     * Генерирует кнопку для открытия модального окна (Material Tailwind API)
-     * 
-     * @param string $modal_id ID модального окна
-     * @param string $button_text Текст кнопки
-     * @param string $button_classes CSS классы для кнопки
-     * @param array $button_attributes Дополнительные атрибуты кнопки
-     * @return string HTML кнопки
-     */
-    public static function trigger_button($modal_id, $button_text = 'Open', $button_classes = '', $button_attributes = array()) {
-        $default_classes = 'inline-flex items-center justify-center border align-middle select-none font-sans font-medium text-center transition-all duration-300 ease-in disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed focus:shadow-none text-sm rounded-md py-2 px-4 shadow-sm hover:shadow-md bg-slate-800 border-slate-800 text-slate-50 hover:bg-slate-700 hover:border-slate-700';
-        
-        $classes = !empty($button_classes) ? $button_classes : $default_classes;
-        
-        // Добавляем # к ID если его нет
-        $target_id = strpos($modal_id, '#') === 0 ? $modal_id : '#' . $modal_id;
-        
-        $attributes_string = '';
-        foreach ($button_attributes as $key => $value) {
-            $attributes_string .= sprintf(' %s="%s"', esc_attr($key), esc_attr($value));
-        }
-        
-        return sprintf(
-            '<button type="button" data-toggle="modal" data-target="%s" class="%s"%s>%s</button>',
-            esc_attr($target_id),
-            esc_attr($classes),
-            $attributes_string,
-            esc_html($button_text)
-        );
-    }
-    
-    /**
      * Создает модальное окно
      * 
      * @param array $args Массив параметров модального окна

@@ -160,11 +160,14 @@ function udsc_scripts() {
 		// Добавляем jQuery как зависимость
 		$dependencies = array_merge($asset['dependencies'], ['jquery']);
 		wp_enqueue_script( 'udsc-main', get_template_directory_uri() . '/dist/js/index.js', $dependencies, $asset['version'], true );
+		
+		// Локализация для AJAX
+		wp_localize_script('udsc-main', 'udsc_ajax', array(
+			'ajaxurl' => admin_url('admin-ajax.php'),
+			'nonce' => wp_create_nonce('udsc_testimonial_form')
+		));
 	}
 	
-	// if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-	// 	wp_enqueue_script( 'comment-reply' );
-	// }
 }
 add_action( 'wp_enqueue_scripts', 'udsc_scripts' );
 
@@ -210,16 +213,33 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 require get_template_directory() . '/inc/components/Modal.php';
 require get_template_directory() . '/inc/components/TestForm.php';
 require get_template_directory() . '/inc/components/ConsultationForm.php';
+require get_template_directory() . '/inc/components/TestimonialForm.php';
+
+/**
+ * Load testimonial generator (only in admin)
+ */
+if (is_admin()) {
+    require get_template_directory() . '/generate-testimonials-admin.php';
+}
 
 
 /**
  * Flush rewrite rules when the theme is activated
  */
 function udsc_flush_rewrite_rules() {
-	udsc_register_case_study_post_type();
+	register_case_study_cpt();
+	register_testimonial_cpt();
 	flush_rewrite_rules();
 }
 add_action( 'after_switch_theme', 'udsc_flush_rewrite_rules' );
+
+/**
+ * Flush rewrite rules when testimonial post type is registered
+ */
+function udsc_flush_rewrite_rules_on_init() {
+	flush_rewrite_rules();
+}
+add_action( 'init', 'udsc_flush_rewrite_rules_on_init', 999 );
 
 /**
  * Safe template part loader for Linux compatibility
@@ -321,7 +341,7 @@ function register_testimonial_cpt() {
     $args = array(
         'labels'             => $labels,
         'public'             => true,
-        'has_archive'        => false,
+        'has_archive'        => true,
         'rewrite'            => array('slug' => 'testimonials'),
         'menu_icon'          => 'dashicons-format-quote',
         'supports'           => array('title', 'editor', 'thumbnail'),
@@ -331,3 +351,138 @@ function register_testimonial_cpt() {
     register_post_type('testimonial', $args);
 }
 add_action('init', 'register_testimonial_cpt');
+
+/**
+ * Обработка формы отзывов
+ */
+function handle_testimonial_form_submission() {
+    if (!isset($_POST['udsc_testimonial_nonce']) || !wp_verify_nonce($_POST['udsc_testimonial_nonce'], 'udsc_testimonial_form')) {
+        return;
+    }
+
+    $name = sanitize_text_field($_POST['name']);
+    $location = sanitize_text_field($_POST['location']);
+    $rating = intval($_POST['rating']);
+    $debt = sanitize_text_field($_POST['debt']);
+    $text = sanitize_textarea_field($_POST['text']);
+    $consent = isset($_POST['consent']) ? 1 : 0;
+
+    // Валидация
+    if (empty($name) || empty($location) || empty($rating) || empty($debt) || empty($text) || !$consent) {
+        wp_die('Пожалуйста, заполните все поля формы и согласитесь на обработку данных.');
+    }
+
+    // Создаем пост отзыва
+    $testimonial_data = array(
+        'post_title'   => $name . ' - ' . $location,
+        'post_content' => $text,
+        'post_status'  => 'pending', // На модерации
+        'post_type'    => 'testimonial'
+    );
+
+    $testimonial_id = wp_insert_post($testimonial_data);
+
+    if ($testimonial_id) {
+        // Сохраняем ACF поля
+        update_field('testimonial_name', $name, $testimonial_id);
+        update_field('testimonial_city', $location, $testimonial_id);
+        update_field('testimonial_text', $text, $testimonial_id);
+        update_field('testimonial_rating', $rating, $testimonial_id);
+        update_field('testimonial_written_off', $debt, $testimonial_id);
+        update_field('testimonial_date', date('d.m.Y'), $testimonial_id);
+        update_field('testimonial_case_number', 'А' . rand(10, 99) . '-' . rand(10000, 99999) . '/' . date('Y'), $testimonial_id);
+        
+        // Отправляем уведомление администратору
+        $admin_email = get_option('admin_email');
+        $subject = 'Новый отзыв от ' . $name;
+        $message = "Получен новый отзыв:\n\n";
+        $message .= "Имя: " . $name . "\n";
+        $message .= "Город: " . $location . "\n";
+        $message .= "Оценка: " . $rating . "/5\n";
+        $message .= "Сумма долга: " . $debt . "\n";
+        $message .= "Отзыв: " . $text . "\n\n";
+        $message .= "Ссылка для модерации: " . admin_url('post.php?post=' . $testimonial_id . '&action=edit');
+
+        wp_mail($admin_email, $subject, $message);
+
+        // Редирект с сообщением об успехе
+        wp_redirect(add_query_arg('testimonial_submitted', '1', wp_get_referer()));
+        exit;
+    } else {
+        wp_die('Произошла ошибка при сохранении отзыва. Попробуйте еще раз.');
+    }
+}
+add_action('admin_post_testimonial_form', 'handle_testimonial_form_submission');
+add_action('admin_post_nopriv_testimonial_form', 'handle_testimonial_form_submission');
+
+// AJAX обработчики для асинхронной отправки формы
+add_action('wp_ajax_testimonial_form', 'handle_testimonial_form_ajax');
+add_action('wp_ajax_nopriv_testimonial_form', 'handle_testimonial_form_ajax');
+
+/**
+ * AJAX обработчик для формы отзывов
+ */
+function handle_testimonial_form_ajax() {
+    // Проверяем nonce
+    if (!wp_verify_nonce($_POST['udsc_testimonial_nonce'], 'udsc_testimonial_form')) {
+        wp_send_json_error('Неверный nonce');
+        return;
+    }
+
+    // Получаем и очищаем данные
+    $name = sanitize_text_field($_POST['name']);
+    $location = sanitize_text_field($_POST['location']);
+    $text = sanitize_textarea_field($_POST['text']);
+    $rating = intval($_POST['rating']);
+    $debt = sanitize_text_field($_POST['debt']);
+    $consent = isset($_POST['consent']) ? 1 : 0;
+
+    // Валидация
+    if (empty($name) || empty($location) || empty($text) || empty($rating) || empty($debt) || !$consent) {
+        wp_send_json_error('Все поля обязательны для заполнения');
+        return;
+    }
+
+    if ($rating < 1 || $rating > 5) {
+        wp_send_json_error('Неверная оценка');
+        return;
+    }
+
+    // Создаем отзыв
+    $testimonial_data = array(
+        'post_title'   => $name . ' - ' . $location,
+        'post_content' => $text,
+        'post_status'  => 'pending',
+        'post_type'    => 'testimonial'
+    );
+
+    $testimonial_id = wp_insert_post($testimonial_data);
+
+    if ($testimonial_id) {
+        // Сохраняем ACF поля
+        update_field('testimonial_name', $name, $testimonial_id);
+        update_field('testimonial_city', $location, $testimonial_id);
+        update_field('testimonial_text', $text, $testimonial_id);
+        update_field('testimonial_rating', $rating, $testimonial_id);
+        update_field('testimonial_written_off', $debt, $testimonial_id);
+        update_field('testimonial_date', date('d.m.Y'), $testimonial_id);
+        update_field('testimonial_case_number', 'А' . rand(10, 99) . '-' . rand(10000, 99999) . '/' . date('Y'), $testimonial_id);
+
+        // Отправляем уведомление администратору
+        $admin_email = get_option('admin_email');
+        $subject = 'Новый отзыв на сайте';
+        $message = "Получен новый отзыв:\n\n";
+        $message .= "Имя: $name\n";
+        $message .= "Город: $location\n";
+        $message .= "Оценка: $rating/5\n";
+        $message .= "Сумма долга: $debt\n";
+        $message .= "Отзыв: $text\n\n";
+        $message .= "Ссылка на отзыв: " . admin_url('post.php?post=' . $testimonial_id . '&action=edit');
+
+        wp_mail($admin_email, $subject, $message);
+
+        wp_send_json_success('Отзыв успешно отправлен на модерацию');
+    } else {
+        wp_send_json_error('Ошибка при сохранении отзыва');
+    }
+}

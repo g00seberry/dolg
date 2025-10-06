@@ -1,0 +1,69 @@
+[
+  {
+    "key": "group_testimonial_fields",
+    "title": "Данные отзыва",
+    "fields": [
+      {
+        "key": "field_testimonial_name",
+        "label": "Имя клиента",
+        "name": "testimonial_name",
+        "type": "text"
+      },
+      {
+        "key": "field_testimonial_city",
+        "label": "Город",
+        "name": "testimonial_city",
+        "type": "text"
+      },
+      {
+        "key": "field_testimonial_text",
+        "label": "Текст отзыва",
+        "name": "testimonial_text",
+        "type": "textarea"
+      },
+      {
+        "key": "field_testimonial_rating",
+        "label": "Рейтинг (1–5)",
+        "name": "testimonial_rating",
+        "type": "number",
+        "min": 1,
+        "max": 5,
+        "step": 1
+      },
+      {
+        "key": "field_testimonial_written_off",
+        "label": "Сумма списания",
+        "name": "testimonial_written_off",
+        "type": "text"
+      },
+      {
+        "key": "field_testimonial_date",
+        "label": "Дата завершения дела",
+        "name": "testimonial_date",
+        "type": "date_picker",
+        "display_format": "d.m.Y",
+        "return_format": "d.m.Y"
+      },
+      {
+        "key": "field_testimonial_case_number",
+        "label": "Номер дела",
+        "name": "testimonial_case_number",
+        "type": "text"
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "post_type",
+          "operator": "==",
+          "value": "testimonial"
+        }
+      ]
+    ],
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": ""
+  }
+]
