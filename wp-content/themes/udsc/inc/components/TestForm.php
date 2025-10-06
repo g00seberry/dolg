@@ -142,28 +142,25 @@ class UDSC_TestForm {
                     </div>
                 </div>
                 
-                <!-- Question 4: Income -->
+                <!-- Question 4: Income Amount -->
                 <div class="space-y-3">
-                    <span class="block text-sm font-semibold text-slate-700 mb-3">
-                        4. Есть ли доход после вычета прожиточного минимума? <span class="text-red-500">*</span>
-                    </span>
-                    
-                    <div class="space-y-2">
-                        <label class="flex items-center space-x-3 p-3 rounded-lg border border-slate-200 hover:border-green-500 hover:bg-green-50 transition-all cursor-pointer">
-                            <input type="radio" name="has_income" value="no" required class="h-4 w-4 text-green-600">
-                            <span class="text-sm text-slate-700">Нет, дохода нет</span>
-                        </label>
-                        
-                        <label class="flex items-center space-x-3 p-3 rounded-lg border border-slate-200 hover:border-orange-500 hover:bg-orange-50 transition-all cursor-pointer">
-                            <input type="radio" name="has_income" value="small" required class="h-4 w-4 text-orange-600">
-                            <span class="text-sm text-slate-700">Есть небольшой доход</span>
-                        </label>
-                        
-                        <label class="flex items-center space-x-3 p-3 rounded-lg border border-slate-200 hover:border-red-500 hover:bg-red-50 transition-all cursor-pointer">
-                            <input type="radio" name="has_income" value="significant" required class="h-4 w-4 text-red-600">
-                            <span class="text-sm text-slate-700">Есть значительный доход</span>
-                        </label>
-                    </div>
+                    <label class="block">
+                        <span class="text-sm font-semibold text-slate-700 mb-2 block">
+                            4. Сумма официального дохода в рублях. (Если таковой отсутствует, указать неофициальный) <span class="text-red-500">*</span>
+                        </span>
+                        <div class="relative">
+                            <input type="number" 
+                                   name="income_amount" 
+                                   required
+                                   min="0" 
+                                   placeholder="Введите сумму дохода"
+                                   class="w-full px-4 py-3 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors">
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                <span class="text-slate-400 text-sm">₽</span>
+                            </div>
+                        </div>
+                        <p class="mt-1 text-xs text-slate-500">Укажите размер вашего ежемесячного дохода</p>
+                    </label>
                 </div>
                 
                 <!-- Question 5: Criminal Record -->
@@ -195,6 +192,28 @@ class UDSC_TestForm {
                             </div>
                         </div>
                     </div>
+                </div>
+                
+                <!-- Question 6: Phone Number -->
+                <div class="space-y-3">
+                    <label class="block">
+                        <span class="text-sm font-semibold text-slate-700 mb-2 block">
+                            6. Номер телефона для связи <span class="text-red-500">*</span>
+                        </span>
+                        <div class="relative">
+                            <input type="tel" 
+                                   name="phone" 
+                                   required
+                                   placeholder="+7 (999) 123-45-67"
+                                   class="w-full px-4 py-3 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors">
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="mt-1 text-xs text-slate-500">Укажите контактный номер для получения консультации</p>
+                    </label>
                 </div>
                 
             </form>

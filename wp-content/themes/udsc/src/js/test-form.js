@@ -84,7 +84,7 @@ class TestFormHandler {
 // Auto-initialize all test forms
 document.addEventListener("DOMContentLoaded", function () {
   const testForms = document.querySelectorAll(
-    'form[id^="bankruptcy-test-form"]'
+    'form[id^="bankruptcy-assessment-test"]'
   );
   testForms.forEach((form) => {
     new TestFormHandler(form.id);
