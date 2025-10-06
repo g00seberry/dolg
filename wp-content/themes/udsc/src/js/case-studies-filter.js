@@ -17,16 +17,30 @@
 
     bindEvents: function () {
       // Apply filters button
-      $("#apply-filters").on("click", this.applyFilters.bind(this));
+      $("#apply-filters").on(
+        "click",
+        function (e) {
+          e.preventDefault();
+          this.applyFilters();
+        }.bind(this)
+      );
 
       // Reset filters button
-      $("#reset-filters").on("click", this.resetFilters.bind(this));
+      $("#reset-filters").on(
+        "click",
+        function (e) {
+          e.preventDefault();
+          this.resetFilters();
+        }.bind(this)
+      );
 
       // Pagination buttons
       $(document).on(
         "click",
         ".pagination-btn",
-        this.handlePagination.bind(this)
+        function (e) {
+          this.handlePagination(e);
+        }.bind(this)
       );
     },
 
@@ -158,8 +172,8 @@
 
     handleError: function (xhr, status, error) {
       this.hideLoading();
-      this.showError("Произошла ошибка при загрузке данных");
       console.error("AJAX Error:", error);
+      this.showError("Произошла ошибка при загрузке данных");
     },
 
     showLoading: function () {

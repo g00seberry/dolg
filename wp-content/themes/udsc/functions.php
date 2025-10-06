@@ -163,8 +163,8 @@ function udsc_scripts() {
 		
 		// Локализация для AJAX
 		wp_localize_script('udsc-main', 'udsc_ajax', array(
-			'ajaxurl' => admin_url('admin-ajax.php'),
-			'nonce' => wp_create_nonce('udsc_testimonial_form')
+			'ajax_url' => admin_url('admin-ajax.php'),
+			'nonce' => wp_create_nonce('udsc_filter_nonce')
 		));
 	}
 	
@@ -214,6 +214,7 @@ require get_template_directory() . '/inc/components/Modal.php';
 require get_template_directory() . '/inc/components/TestForm.php';
 require get_template_directory() . '/inc/components/ConsultationForm.php';
 require get_template_directory() . '/inc/components/TestimonialForm.php';
+require get_template_directory() . '/inc/components/TestimonialCard.php';
 
 /**
  * Load testimonial generator (only in admin)
@@ -418,6 +419,14 @@ add_action('admin_post_nopriv_testimonial_form', 'handle_testimonial_form_submis
 // AJAX обработчики для асинхронной отправки формы
 add_action('wp_ajax_testimonial_form', 'handle_testimonial_form_ajax');
 add_action('wp_ajax_nopriv_testimonial_form', 'handle_testimonial_form_ajax');
+
+// Тестовый AJAX обработчик для отладки
+add_action('wp_ajax_test_ajax', 'test_ajax_handler');
+add_action('wp_ajax_nopriv_test_ajax', 'test_ajax_handler');
+
+function test_ajax_handler() {
+    wp_send_json_success('AJAX работает!');
+}
 
 /**
  * AJAX обработчик для формы отзывов

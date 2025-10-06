@@ -7,43 +7,21 @@
 // Получаем данные блока (если используется ACF или аналогичные поля)
 $section_title = get_field('testimonials_title') ?: 'Отзывы клиентов';
 $section_description = get_field('testimonials_description') ?: 'Что говорят наши клиенты о нашей работе';
+$show_button = get_field('show_testimonial_button') !== false; // По умолчанию показываем кнопку
 
-// Массив отзывов
-$testimonials = get_field('testimonials_list') ?: [
-    [
-        'name' => 'Мария Иванова',
-        'position' => 'Предприниматель',
-        'text' => 'Благодаря профессиональной помощи удалось списать долги на сумму более 2 млн рублей. Весь процесс занял 8 месяцев.',
-        'rating' => 5
-    ],
-    [
-        'name' => 'Алексей Петров',
-        'position' => 'Частное лицо',
-        'text' => 'Отличная команда юристов! Помогли разобраться со сложной ситуацией с банками и МФО. Рекомендую!',
-        'rating' => 5
-    ],
-    [
-        'name' => 'Светлана К.',
-        'position' => 'Пенсионер',
-        'text' => 'Очень благодарна за помощь. Думала, что долги будут преследовать всю жизнь, но процедура банкротства решила все проблемы.',
-        'rating' => 5
-    ]
-];
+// Получаем отзывы из базы данных
+$testimonials_query = new WP_Query(array(
+    'post_type' => 'testimonial',
+    'post_status' => 'publish',
+    'posts_per_page' => 6, // Показываем максимум 6 отзывов в блоке
+    'orderby' => 'date',
+    'order' => 'DESC'
+));
 
-// Функция для создания звёзд рейтинга
-function render_stars($rating) {
-    $stars_html = '';
-    for ($i = 1; $i <= $rating; $i++) {
-        $stars_html .= '<svg class="h-5 w-5 fill-primary text-primary" viewBox="0 0 20 20" fill="currentColor">
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-        </svg>';
-    }
-    return $stars_html;
-}
 ?>
 
 <!-- Testimonials Section -->
-<section class="section bg-muted/20">
+<section class="py-16 px-4 bg-muted/20">
     <div class="container">
         <!-- Section Header -->
         <div class="text-center mb-12">
@@ -56,30 +34,41 @@ function render_stars($rating) {
         </div>
 
         <!-- Testimonials Grid -->
-        <div class="grid md:grid-cols-3 gap-8">
-            <?php foreach ($testimonials as $testimonial): ?>
-                <div class="bg-card rounded-lg border p-6">
-                    <!-- Star Rating -->
-                    <div class="flex mb-4">
-                        <?php echo render_stars($testimonial['rating']); ?>
-                    </div>
-                    
-                    <!-- Testimonial Text -->
-                    <p class="text-muted-foreground mb-4 italic">
-                        "<?php echo esc_html($testimonial['text']); ?>"
-                    </p>
-                    
-                    <!-- Author Info -->
-                    <div>
-                        <div class="font-semibold">
-                            <?php echo esc_html($testimonial['name']); ?>
-                        </div>
-                        <div class="text-sm text-muted-foreground">
-                            <?php echo esc_html($testimonial['position']); ?>
-                        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <?php if ($testimonials_query->have_posts()): ?>
+                <?php while ($testimonials_query->have_posts()): ?>
+                    <?php $testimonials_query->the_post(); ?>
+                    <?php echo UDSC_TestimonialCard::create_from_post(get_post()); ?>
+                <?php endwhile; ?>
+                <?php wp_reset_postdata(); ?>
+            <?php else: ?>
+                <!-- Fallback если нет отзывов -->
+                <div class="col-span-full text-center py-12">
+                    <div class="bg-white rounded-lg border border-border p-8">
+                        <svg class="h-16 w-16 text-muted-foreground mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                        </svg>
+                        <h3 class="text-lg font-semibold mb-2">Пока нет отзывов</h3>
+                        <p class="text-muted-foreground">Здесь будут отображаться отзывы наших клиентов.</p>
                     </div>
                 </div>
-            <?php endforeach; ?>
+            <?php endif; ?>
         </div>
+        
     </div>
 </section>
+
+<?php
+// Добавляем модальное окно с формой отзыва
+if ($show_button) {
+    echo UDSC_Modal::create(array(
+        'id' => 'testimonial-modal',
+        'title' => 'Оставить отзыв',
+        'content' => UDSC_TestimonialForm::create('testimonial-modal-form', ''),
+        'size' => 'lg',
+        'show_header' => true,
+        'show_footer' => false,
+        'body_classes' => 'p-0'
+    ));
+}
+?>

@@ -23,15 +23,8 @@ class UDSC_Case_Studies_Filter {
      * Enqueue scripts and styles
      */
     public function enqueue_scripts() {
-        if (is_post_type_archive('case_study')) {
-            // Проверяем, что скрипт зарегистрирован и еще не локализован
-            if (wp_script_is('udsc-main', 'registered') && !wp_scripts()->get_data('udsc-main', 'data')) {
-                wp_localize_script('udsc-main', 'udsc_ajax', [
-                    'ajax_url' => admin_url('admin-ajax.php'),
-                    'nonce' => wp_create_nonce('udsc_filter_nonce')
-                ]);
-            }
-        }
+        // Локализация уже происходит в functions.php
+        // Этот метод оставляем пустым, чтобы избежать дублирования
     }
     
     /**
@@ -320,9 +313,13 @@ class UDSC_Case_Studies_Filter {
      * AJAX handler for filtering
      */
     public function ajax_filter_case_studies() {
+        // Set proper headers for JSON response
+        header('Content-Type: application/json');
+        
         // Verify nonce
         if (!wp_verify_nonce($_POST['nonce'], 'udsc_filter_nonce')) {
-            wp_die('Security check failed');
+            wp_send_json_error('Security check failed');
+            return;
         }
         
         $filters = [
