@@ -299,3 +299,35 @@ function register_case_study_cpt() {
     register_post_type('case_study', $args);
 }
 add_action('init', 'register_case_study_cpt');
+
+
+// Регистрируем кастомный тип записи "Отзывы клиентов"
+function register_testimonial_cpt() {
+    $labels = array(
+        'name'               => 'Отзывы',
+        'singular_name'      => 'Отзыв',
+        'menu_name'          => 'Отзывы',
+        'name_admin_bar'     => 'Отзыв',
+        'add_new'            => 'Добавить отзыв',
+        'add_new_item'       => 'Добавить новый отзыв',
+        'new_item'           => 'Новый отзыв',
+        'edit_item'          => 'Редактировать отзыв',
+        'view_item'          => 'Просмотреть отзыв',
+        'all_items'          => 'Все отзывы',
+        'search_items'       => 'Искать отзывы',
+        'not_found'          => 'Отзывы не найдены',
+    );
+
+    $args = array(
+        'labels'             => $labels,
+        'public'             => true,
+        'has_archive'        => false,
+        'rewrite'            => array('slug' => 'testimonials'),
+        'menu_icon'          => 'dashicons-format-quote',
+        'supports'           => array('title', 'editor', 'thumbnail'),
+        'show_in_rest'       => true,
+    );
+
+    register_post_type('testimonial', $args);
+}
+add_action('init', 'register_testimonial_cpt');
