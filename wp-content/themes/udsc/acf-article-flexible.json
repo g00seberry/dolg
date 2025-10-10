@@ -1,0 +1,422 @@
+{
+  "key": "group_article_flexible",
+  "title": "Article Content",
+  "fields": [
+    {
+      "key": "field_article_content",
+      "label": "Article Content",
+      "name": "article_content",
+      "type": "flexible_content",
+      "layouts": [
+        {
+          "key": "layout_hero_block",
+          "name": "hero_block",
+          "label": "Hero Block",
+          "display": "block",
+          "sub_fields": [
+            {
+              "key": "field_hero_title",
+              "label": "Title",
+              "name": "title",
+              "type": "text"
+            },
+            {
+              "key": "field_hero_subtitle",
+              "label": "Subtitle",
+              "name": "subtitle",
+              "type": "textarea"
+            },
+            {
+              "key": "field_hero_category",
+              "label": "Category",
+              "name": "category",
+              "type": "text",
+              "default_value": "Законодательство"
+            },
+            {
+              "key": "field_hero_author",
+              "label": "Author",
+              "name": "author",
+              "type": "text"
+            },
+            {
+              "key": "field_hero_date",
+              "label": "Date",
+              "name": "date",
+              "type": "date_picker"
+            },
+            {
+              "key": "field_hero_views",
+              "label": "Views",
+              "name": "views",
+              "type": "number"
+            },
+            {
+              "key": "field_hero_comments_count",
+              "label": "Comments Count",
+              "name": "comments_count",
+              "type": "number"
+            },
+            {
+              "key": "field_hero_image",
+              "label": "Image",
+              "name": "image",
+              "type": "image"
+            }
+          ]
+        },
+        {
+          "key": "layout_intro_image",
+          "name": "intro_image",
+          "label": "Intro Image",
+          "display": "block",
+          "sub_fields": [
+            {
+              "key": "field_intro_image",
+              "label": "Image",
+              "name": "image",
+              "type": "image"
+            },
+            {
+              "key": "field_intro_content",
+              "label": "Content",
+              "name": "content",
+              "type": "wysiwyg"
+            }
+          ]
+        },
+        {
+          "key": "layout_intro_text",
+          "name": "intro_text",
+          "label": "Intro Text",
+          "display": "block",
+          "sub_fields": [
+            {
+              "key": "field_intro_content",
+              "label": "Content",
+              "name": "content",
+              "type": "wysiwyg"
+            }
+          ]
+        },
+        {
+          "key": "layout_content_table",
+          "name": "content_table",
+          "label": "Content Table",
+          "display": "block",
+          "sub_fields": [
+            {
+              "key": "field_table_title",
+              "label": "Title",
+              "name": "title",
+              "type": "text"
+            },
+            {
+              "key": "field_table_items",
+              "label": "Items",
+              "name": "items",
+              "type": "repeater",
+              "sub_fields": [
+                {
+                  "key": "field_table_item_label",
+                  "label": "Label",
+                  "name": "link_label",
+                  "type": "text"
+                },
+                {
+                  "key": "field_table_item_anchor",
+                  "label": "Anchor",
+                  "name": "link_anchor",
+                  "type": "text"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "key": "layout_list_section",
+          "name": "list_section",
+          "label": "List Section",
+          "display": "block",
+          "sub_fields": [
+            {
+              "key": "field_list_title",
+              "label": "Title",
+              "name": "title",
+              "type": "text"
+            },
+            {
+              "key": "field_list_content",
+              "label": "Content",
+              "name": "content",
+              "type": "wysiwyg"
+            },
+            {
+              "key": "field_list_items",
+              "label": "Items",
+              "name": "list",
+              "type": "repeater",
+              "sub_fields": [
+                {
+                  "key": "field_list_item_text",
+                  "label": "Item Text",
+                  "name": "item_text",
+                  "type": "text"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "key": "layout_columns_section",
+          "name": "columns_section",
+          "label": "Columns Section",
+          "display": "block",
+          "sub_fields": [
+            {
+              "key": "field_columns_title",
+              "label": "Title",
+              "name": "title",
+              "type": "text"
+            },
+            {
+              "key": "field_columns_left_title",
+              "label": "Left Column Title",
+              "name": "left_title",
+              "type": "text"
+            },
+            {
+              "key": "field_columns_left_items",
+              "label": "Left Items",
+              "name": "left_items",
+              "type": "repeater",
+              "sub_fields": [
+                {
+                  "key": "field_columns_left_item",
+                  "label": "Item",
+                  "name": "item_text",
+                  "type": "text"
+                }
+              ]
+            },
+            {
+              "key": "field_columns_right_title",
+              "label": "Right Column Title",
+              "name": "right_title",
+              "type": "text"
+            },
+            {
+              "key": "field_columns_right_items",
+              "label": "Right Items",
+              "name": "right_items",
+              "type": "repeater",
+              "sub_fields": [
+                {
+                  "key": "field_columns_right_item",
+                  "label": "Item",
+                  "name": "item_text",
+                  "type": "text"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "key": "layout_steps_section",
+          "name": "steps_section",
+          "label": "Steps Section",
+          "display": "block",
+          "sub_fields": [
+            {
+              "key": "field_steps_title",
+              "label": "Title",
+              "name": "title",
+              "type": "text"
+            },
+            {
+              "key": "field_steps_intro",
+              "label": "Intro",
+              "name": "intro",
+              "type": "wysiwyg"
+            },
+            {
+              "key": "field_steps_list",
+              "label": "Steps",
+              "name": "steps",
+              "type": "repeater",
+              "sub_fields": [
+                {
+                  "key": "field_step_title",
+                  "label": "Step Title",
+                  "name": "step_title",
+                  "type": "text"
+                },
+                {
+                  "key": "field_step_description",
+                  "label": "Step Description",
+                  "name": "step_description",
+                  "type": "wysiwyg"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "key": "layout_debtor_section",
+          "name": "debtor_section",
+          "label": "Debtor Section",
+          "display": "block",
+          "sub_fields": [
+            {
+              "key": "field_debtor_title",
+              "label": "Title",
+              "name": "title",
+              "type": "text"
+            },
+            {
+              "key": "field_debtor_intro",
+              "label": "Intro",
+              "name": "intro",
+              "type": "wysiwyg"
+            },
+            {
+              "key": "field_debtor_list_title",
+              "label": "List Title",
+              "name": "list_title",
+              "type": "text"
+            },
+            {
+              "key": "field_debtor_list",
+              "label": "List",
+              "name": "list",
+              "type": "repeater",
+              "sub_fields": [
+                {
+                  "key": "field_debtor_item",
+                  "label": "Item Text",
+                  "name": "item_text",
+                  "type": "text"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "key": "layout_consequences_section",
+          "name": "consequences_section",
+          "label": "Consequences Section",
+          "display": "block",
+          "sub_fields": [
+            {
+              "key": "field_conseq_title",
+              "label": "Title",
+              "name": "title",
+              "type": "text"
+            },
+            {
+              "key": "field_conseq_intro",
+              "label": "Intro",
+              "name": "intro",
+              "type": "wysiwyg"
+            },
+            {
+              "key": "field_conseq_pos_title",
+              "label": "Positive Title",
+              "name": "positive_title",
+              "type": "text"
+            },
+            {
+              "key": "field_conseq_pos_items",
+              "label": "Positive Items",
+              "name": "positive_items",
+              "type": "repeater",
+              "sub_fields": [
+                {
+                  "key": "field_conseq_pos_item",
+                  "label": "Item Text",
+                  "name": "item_text",
+                  "type": "text"
+                }
+              ]
+            },
+            {
+              "key": "field_conseq_neg_title",
+              "label": "Negative Title",
+              "name": "negative_title",
+              "type": "text"
+            },
+            {
+              "key": "field_conseq_neg_items",
+              "label": "Negative Items",
+              "name": "negative_items",
+              "type": "repeater",
+              "sub_fields": [
+                {
+                  "key": "field_conseq_neg_item",
+                  "label": "Item Text",
+                  "name": "item_text",
+                  "type": "text"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "key": "layout_conclusion_section",
+          "name": "conclusion_section",
+          "label": "Conclusion Section",
+          "display": "block",
+          "sub_fields": [
+            {
+              "key": "field_conclusion_title",
+              "label": "Title",
+              "name": "title",
+              "type": "text"
+            },
+            {
+              "key": "field_conclusion_content",
+              "label": "Content",
+              "name": "content",
+              "type": "wysiwyg"
+            }
+          ]
+        },
+        {
+          "key": "layout_cta_block",
+          "name": "cta_block",
+          "label": "Call To Action",
+          "display": "block",
+          "sub_fields": [
+            {
+              "key": "field_cta_text",
+              "label": "Text",
+              "name": "text",
+              "type": "wysiwyg"
+            },
+            {
+              "key": "field_cta_button_label",
+              "label": "Button Label",
+              "name": "button_label",
+              "type": "text"
+            },
+            {
+              "key": "field_cta_button_url",
+              "label": "Button URL",
+              "name": "button_url",
+              "type": "url"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "post"
+      }
+    ]
+  ]
+}

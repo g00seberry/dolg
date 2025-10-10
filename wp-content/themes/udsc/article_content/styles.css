@@ -1,0 +1,137 @@
+/**
+ * Additional styles for article content components
+ * These styles complement Tailwind CSS classes
+ */
+
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom prose styles for better readability */
+.article-prose {
+  @apply prose prose-lg max-w-none;
+}
+
+.article-prose h1 {
+  @apply text-3xl lg:text-4xl font-bold mb-4 text-gray-900;
+}
+
+.article-prose h2 {
+  @apply text-2xl font-bold mb-4 text-gray-900;
+}
+
+.article-prose h3 {
+  @apply text-xl font-semibold mb-3 text-gray-900;
+}
+
+.article-prose h4 {
+  @apply text-lg font-semibold mb-2 text-gray-900;
+}
+
+.article-prose p {
+  @apply text-gray-700 leading-relaxed mb-4;
+}
+
+.article-prose ul {
+  @apply space-y-2 mb-4;
+}
+
+.article-prose li {
+  @apply text-gray-700;
+}
+
+.article-prose a {
+  @apply text-blue-600 hover:text-blue-800 hover:underline transition-colors duration-200;
+}
+
+/* Card hover effects */
+.article-card {
+  @apply transition-shadow duration-200 hover:shadow-lg;
+}
+
+/* Button hover effects */
+.article-button {
+  @apply transition-all duration-200 transform hover:scale-105;
+}
+
+/* Icon animations */
+.article-icon {
+  @apply transition-transform duration-200;
+}
+
+.article-icon:hover {
+  @apply scale-110;
+}
+
+/* Gradient backgrounds */
+.gradient-primary {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+}
+
+.gradient-warning {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+.gradient-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.gradient-danger {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+/* Custom scrollbar for better UX */
+.article-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.article-scroll::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+
+.article-scroll::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.article-scroll::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Responsive text sizing */
+@media (max-width: 640px) {
+  .article-prose h1 {
+    @apply text-2xl;
+  }
+
+  .article-prose h2 {
+    @apply text-xl;
+  }
+
+  .article-prose h3 {
+    @apply text-lg;
+  }
+}
+
+/* Print styles */
+@media print {
+  .article-card {
+    @apply shadow-none border border-gray-300;
+  }
+
+  .article-button {
+    @apply hidden;
+  }
+
+  .article-prose a {
+    @apply text-black no-underline;
+  }
+
+  .article-prose a::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+  }
+}
