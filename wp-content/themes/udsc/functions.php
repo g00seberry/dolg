@@ -287,13 +287,6 @@ require get_template_directory() . '/inc/components/ConsultationForm.php';
 require get_template_directory() . '/inc/components/TestimonialForm.php';
 require get_template_directory() . '/inc/components/TestimonialCard.php';
 
-/**
- * Load testimonial generator (only in admin)
- */
-if (is_admin()) {
-    require get_template_directory() . '/generate-testimonials-admin.php';
-}
-
 
 /**
  * Flush rewrite rules when the theme is activated
