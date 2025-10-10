@@ -4,6 +4,7 @@ import "./test-form.js";
 import "./mobile-menu.js";
 import "./case-studies-filter.js";
 import "./testimonial-form.js";
+import "./contact-form.js";
 
 // Initialize all components in your app
 initMaterialTailwind();
