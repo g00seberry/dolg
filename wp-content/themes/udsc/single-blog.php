@@ -19,7 +19,7 @@ require_once get_template_directory() . '/article_content/article-content.php';
 		// Отобразить содержимое статьи используя новые компоненты
 		display_article_content();
 		?>
-
+		
 	<div class="rounded-lg border bg-card text-card-foreground shadow-sm p-8 text-center bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20">
 		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text w-12 h-12 mx-auto mb-4 text-primary">
 			<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>

@@ -141,6 +141,77 @@ function udsc_widgets_init() {
 add_action( 'widgets_init', 'udsc_widgets_init' );
 
 /**
+ * Calculate reading time for blog posts including ACF content
+ */
+function calculate_blog_reading_time($post_id = null) {
+    if (!$post_id) {
+        global $post;
+        $post_id = $post->ID ?? get_the_ID();
+    }
+    
+    if (!$post_id) {
+        return 0;
+    }
+    
+    $total_words = 0;
+    
+    // Get standard post content
+    $post_content = get_post_field('post_content', $post_id);
+    if ($post_content) {
+        $total_words += str_word_count(strip_tags($post_content));
+    }
+    
+    // Get ACF flexible content
+    $article_content = get_field('article_content', $post_id);
+    if ($article_content && is_array($article_content)) {
+        foreach ($article_content as $block) {
+            if (empty($block['acf_fc_layout'])) {
+                continue;
+            }
+            
+            // Extract text content from all fields in the block
+            foreach ($block as $field_key => $field_value) {
+                if ($field_key === 'acf_fc_layout') {
+                    continue;
+                }
+                
+                if (is_string($field_value)) {
+                    // Remove HTML tags and count words
+                    $clean_text = strip_tags($field_value);
+                    $total_words += str_word_count($clean_text);
+                } elseif (is_array($field_value)) {
+                    // Handle nested arrays (like repeater fields)
+                    $total_words += count_words_in_array($field_value);
+                }
+            }
+        }
+    }
+    
+    // Calculate reading time (200 words per minute)
+    $reading_time = ceil($total_words / 200);
+    
+    return max(1, $reading_time); // Minimum 1 minute
+}
+
+/**
+ * Recursively count words in array values
+ */
+function count_words_in_array($array) {
+    $word_count = 0;
+    
+    foreach ($array as $value) {
+        if (is_string($value)) {
+            $clean_text = strip_tags($value);
+            $word_count += str_word_count($clean_text);
+        } elseif (is_array($value)) {
+            $word_count += count_words_in_array($value);
+        }
+    }
+    
+    return $word_count;
+}
+
+/**
  * Enqueue scripts and styles.
  */
 function udsc_scripts() {
