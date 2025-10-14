@@ -1314,6 +1314,10 @@ h4 {
   height: 4rem;
 }
 
+.h-2 {
+  height: 0.5rem;
+}
+
 .h-20 {
   height: 5rem;
 }
@@ -1372,10 +1376,6 @@ h4 {
 
 .h-full {
   height: 100%;
-}
-
-.h-2 {
-  height: 0.5rem;
 }
 
 .min-h-\[120px\] {
@@ -1571,13 +1571,13 @@ h4 {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.rotate-45 {
-  --tw-rotate: 45deg;
+.rotate-3 {
+  --tw-rotate: 3deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.rotate-3 {
-  --tw-rotate: 3deg;
+.rotate-45 {
+  --tw-rotate: 45deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -2122,6 +2122,14 @@ h4 {
   background-color: hsl(var(--card));
 }
 
+.bg-card\/30 {
+  background-color: hsl(var(--card) / 0.3);
+}
+
+.bg-card\/50 {
+  background-color: hsl(var(--card) / 0.5);
+}
+
 .bg-gray-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
@@ -2246,14 +2254,6 @@ h4 {
   background-color: rgb(254 252 232 / var(--tw-bg-opacity, 1));
 }
 
-.bg-card\/50 {
-  background-color: hsl(var(--card) / 0.5);
-}
-
-.bg-card\/30 {
-  background-color: hsl(var(--card) / 0.3);
-}
-
 .bg-opacity-70 {
   --tw-bg-opacity: 0.7;
 }
@@ -2279,6 +2279,12 @@ h4 {
 .from-blue-50 {
   --tw-gradient-from: #eff6ff var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(239 246 255 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-foreground {
+  --tw-gradient-from: hsl(var(--foreground)) var(--tw-gradient-from-position);
+  --tw-gradient-to: hsl(var(--foreground) / 0) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
@@ -2312,6 +2318,12 @@ h4 {
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
+.from-primary\/20 {
+  --tw-gradient-from: hsl(var(--primary) / 0.2) var(--tw-gradient-from-position);
+  --tw-gradient-to: hsl(var(--primary) / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
 .from-primary\/5 {
   --tw-gradient-from: hsl(var(--primary) / 0.05) var(--tw-gradient-from-position);
   --tw-gradient-to: hsl(var(--primary) / 0) var(--tw-gradient-to-position);
@@ -2321,18 +2333,6 @@ h4 {
 .from-red-500 {
   --tw-gradient-from: #ef4444 var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(239 68 68 / 0) var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-}
-
-.from-foreground {
-  --tw-gradient-from: hsl(var(--foreground)) var(--tw-gradient-from-position);
-  --tw-gradient-to: hsl(var(--foreground) / 0) var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-}
-
-.from-primary\/20 {
-  --tw-gradient-from: hsl(var(--primary) / 0.2) var(--tw-gradient-from-position);
-  --tw-gradient-to: hsl(var(--primary) / 0) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
@@ -2361,6 +2361,10 @@ h4 {
 
 .to-blue-100 {
   --tw-gradient-to: #dbeafe var(--tw-gradient-to-position);
+}
+
+.to-foreground\/80 {
+  --tw-gradient-to: hsl(var(--foreground) / 0.8) var(--tw-gradient-to-position);
 }
 
 .to-muted\/10 {
@@ -2401,10 +2405,6 @@ h4 {
 
 .to-subtle {
   --tw-gradient-to: hsl(var(--subtle)) var(--tw-gradient-to-position);
-}
-
-.to-foreground\/80 {
-  --tw-gradient-to: hsl(var(--foreground) / 0.8) var(--tw-gradient-to-position);
 }
 
 .bg-clip-text {
@@ -2555,6 +2555,10 @@ h4 {
   padding-bottom: 0.5rem;
 }
 
+.pb-20 {
+  padding-bottom: 5rem;
+}
+
 .pb-4 {
   padding-bottom: 1rem;
 }
@@ -2585,10 +2589,6 @@ h4 {
 
 .pt-8 {
   padding-top: 2rem;
-}
-
-.pb-20 {
-  padding-bottom: 5rem;
 }
 
 .text-left {
