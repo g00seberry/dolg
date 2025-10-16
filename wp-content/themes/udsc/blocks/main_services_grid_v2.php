@@ -10,15 +10,8 @@ $section_title = $data['section_title'];
 $section_subtitle = $data['section_subtitle'];
 $services_list = $data['services_list'];
 
-// Обработка формата section_title (может быть "title" или "tag:title")
-$title_tag = 'h2';
-$title_text = $section_title;
-
-if ($section_title && strpos($section_title, ':') !== false) {
-    list($title_tag, $title_text) = explode(':', $section_title, 2);
-    $title_tag = trim($title_tag);
-    $title_text = trim($title_text);
-}
+// Обработка формата section_title с помощью утилитарной функции
+$title_html = udsc_parse_title_with_tag($section_title);
 ?>
 
 <!-- Main Services Grid -->
@@ -26,10 +19,8 @@ if ($section_title && strpos($section_title, ':') !== false) {
     <div class="container">
         <?php if ($section_title || $section_subtitle): ?>
             <div class="text-center mb-12">
-                <?php if ($title_text): ?>
-                    <<?php echo esc_attr($title_tag); ?> class="text-4xl lg:text-5xl font-bold mb-6">
-                        <?php echo esc_html($title_text); ?>
-                    </<?php echo esc_attr($title_tag); ?>>
+                <?php if ($title_html): ?>
+                    <?php echo $title_html; ?>
                 <?php endif; ?>
                 
                 <?php if ($section_subtitle): ?>

@@ -340,6 +340,38 @@ function udsc_safe_get_template_part($template_name, $name = null, $args = array
 }
 
 /**
+ * Parse title with optional tag format and return HTML markup
+ * Handles formats: "title" or "tag:title"
+ * 
+ * @param string $title The title string to parse
+ * @param string $default_tag Default tag if no tag specified (default: 'h2')
+ * @param string $css_classes CSS classes for the title element
+ * @return string HTML markup for the title
+ */
+function udsc_parse_title_with_tag($title, $default_tag = 'h2', $css_classes = 'text-4xl lg:text-5xl font-bold mb-6') {
+    if (empty($title)) {
+        return '';
+    }
+    
+    $title_tag = $default_tag;
+    $title_text = $title;
+    
+    if (strpos($title, ':') !== false) {
+        list($title_tag, $title_text) = explode(':', $title, 2);
+        $title_tag = trim($title_tag);
+        $title_text = trim($title_text);
+    }
+    
+    return sprintf(
+        '<%s class="%s">%s</%s>',
+        esc_attr($title_tag),
+        esc_attr($css_classes),
+        esc_html($title_text),
+        esc_attr($title_tag)
+    );
+}
+
+/**
  * Enhanced error logging for production debugging
  */
 function udsc_log_error($message, $context = '') {
