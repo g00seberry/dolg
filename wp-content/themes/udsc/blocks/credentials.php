@@ -16,7 +16,7 @@ if (empty($achievements)) {
 ?>
 
 <section class="pb-20">
-    <div class="container mx-auto max-w-6xl">
+    <div class="container mx-auto">
         <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-8">
             <h3 class="text-2xl font-semibold mb-6">
                 Достижения и квалификация

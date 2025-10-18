@@ -14,7 +14,7 @@ $description = $data['description'];
 ?>
 
 <section class="relative py-20 px-4">
-    <div class="container mx-auto max-w-6xl">
+    <div class="container mx-auto">
         <div class="grid lg:grid-cols-2 gap-12 items-center">
             <div class="order-2 lg:order-1">
                 <div class="flex items-center gap-2 mb-4">

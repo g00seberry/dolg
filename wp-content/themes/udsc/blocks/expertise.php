@@ -16,7 +16,7 @@ if (empty($expertise_list)) {
 ?>
 
 <section class="pb-20">
-    <div class="container mx-auto max-w-6xl">
+    <div class="container mx-auto">
         <h2 class="text-3xl font-bold text-center mb-12">
             Экспертиза и специализация
         </h2>

@@ -10,7 +10,7 @@ $availability = $data['availability'];
 ?>
 
 <section class="pb-20 bg-card/50">
-    <div class="container mx-auto max-w-6xl">
+    <div class="container mx-auto">
         <div class="grid md:grid-cols-4 gap-8">
             <div class="text-center">
                 <div class="text-4xl font-bold text-primary mb-2">

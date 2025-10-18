@@ -1,13 +1,18 @@
 <?php
 /**
- * Main CTA Block Template
- * Hero Section для банкротства физических лиц
+ * Block Name: Main CTA
+ * Description: Главный CTA блок
  */
 
-// Получаем данные блока (если используется ACF или аналогичные поля)
-$heading = get_field('heading') ?: 'Банкротство физических лиц';
-$description = get_field('description') ?: 'Законное списание долгов и защита от кредиторов. Профессиональное сопровождение процедуры банкротства с гарантией результата.';
-$hero_image = get_field('hero_image') ?: get_template_directory_uri() . '/assets/images/hero-image.jpg';
+// Получаем данные из ACF полей
+$data = $args['data'];
+$title = $data['title'];
+$subtitle = $data['subtitle'];
+$photo = $data['photo'];
+$stats = $data['stats'] ?? [];
+
+// Обработка заголовка с помощью утилитарной функции
+$title_html = udsc_parse_title_with_tag($title, 'h1', 'text-4xl lg:text-6xl font-bold text-balance mb-6');
 ?>
 
 <!-- Hero Section -->
@@ -16,28 +21,39 @@ $hero_image = get_field('hero_image') ?: get_template_directory_uri() . '/assets
     <div class="container">
         <div class="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-                <h1 class="text-4xl lg:text-6xl font-bold text-balance mb-6">
-                    <?php echo esc_html($heading); ?>
-                </h1>
-                <p class="text-xl text-muted-foreground mb-8 text-balance">
-                    <?php echo esc_html($description); ?>
-                </p>
+                <?php if ($title_html): ?>
+                    <?php echo $title_html; ?>
+                <?php endif; ?>
+                
+                <?php if ($subtitle): ?>
+                    <p class="text-xl text-muted-foreground mb-8 text-balance">
+                        <?php echo nl2br(esc_html($subtitle)); ?>
+                    </p>
+                <?php endif; ?>
                 
                 <!-- Статистика -->
-                <div class="grid sm:grid-cols-3 gap-4 mb-8">
-                    <div class="text-center">
-                        <div class="text-2xl font-bold text-primary">500+</div>
-                        <div class="text-sm text-muted-foreground">Успешных дел</div>
+                <?php if ($stats): ?>
+                    <div class="grid sm:grid-cols-3 gap-4 mb-8">
+                        <?php foreach ($stats as $stat): ?>
+                            <?php
+                            $value = $stat['value'] ?? '';
+                            $label = $stat['label'] ?? '';
+                            
+                            if (empty($value) && empty($label)) {
+                                continue;
+                            }
+                            ?>
+                            <div class="text-center">
+                                <?php if ($value): ?>
+                                    <div class="text-2xl font-bold text-primary"><?php echo esc_html($value); ?></div>
+                                <?php endif; ?>
+                                <?php if ($label): ?>
+                                    <div class="text-sm text-muted-foreground"><?php echo esc_html($label); ?></div>
+                                <?php endif; ?>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
-                    <div class="text-center">
-                        <div class="text-2xl font-bold text-primary">98%</div>
-                        <div class="text-sm text-muted-foreground">Положительных решений</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-2xl font-bold text-primary">12</div>
-                        <div class="text-sm text-muted-foreground">Лет опыта</div>
-                    </div>
-                </div>
+                <?php endif; ?>
 
                 <!-- Кнопки -->
                 <div class="flex flex-col sm:flex-row gap-4">
@@ -59,12 +75,14 @@ $hero_image = get_field('hero_image') ?: get_template_directory_uri() . '/assets
             </div>
             
             <!-- Изображение -->
-            <div class="relative">
-                <img src="<?php echo esc_url($hero_image); ?>" 
-                     alt="Юридическая консультация по банкротству в офисе"
-                     class="rounded-lg shadow-lg w-full h-auto object-cover"
-                     loading="lazy">
-            </div>
+            <?php if ($photo): ?>
+                <div class="relative">
+                    <img src="<?php echo esc_url($photo['url']); ?>" 
+                         alt="<?php echo esc_attr($photo['alt'] ?: 'Главное изображение'); ?>"
+                         class="rounded-lg shadow-lg w-full h-auto object-cover"
+                         loading="lazy">
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 </section>

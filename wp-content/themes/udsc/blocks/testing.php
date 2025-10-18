@@ -1,13 +1,19 @@
 <?php
 /**
- * Test Section Block Template
- * Блок для тестирования банкротства через МФЦ
+ * Block Name: Testing
+ * Description: Информационный блок с кнопкой (через МФЦ)
  */
 
-// Получаем данные блока (если используется ACF или аналогичные поля)
-$heading = get_field('test_heading') ?: 'Возможно, вам подойдёт банкротство через МФЦ?';
-$description = get_field('test_description') ?: 'В законе №127-ФЗ «О банкротстве» внесены изменения (№289-ФЗ от 31.07.2020), которые позволяют физлицам воспользоваться бесплатной внесудебной процедурой банкротства через МФЦ. Новые изменения помогают государству разгрузить суды и сделать процесс списания долгов проще и дешевле для граждан.';
-$test_link = "/testirovanie/";
+// Получаем данные из ACF полей
+$data = $args['data'];
+$title = $data['title'];
+$text = $data['text'];
+$button_text = $data['button_text'];
+$button_subtext = $data['button_subtext'];
+$button_link = $data['button_link'];
+
+// Обработка заголовка с помощью утилитарной функции
+$title_html = udsc_parse_title_with_tag($title, 'h2', 'text-2xl lg:text-3xl font-bold mb-6');
 ?>
 
 <!-- Test Section -->
@@ -40,27 +46,33 @@ $test_link = "/testirovanie/";
             <div class="grid lg:grid-cols-2 gap-8 items-center relative z-10">
                 <!-- Left column - Content -->
                 <div>
-                    <h2 class="text-2xl lg:text-3xl font-bold mb-6">
-                        <?php echo esc_html($heading); ?>
-                    </h2>
+                    <?php if ($title_html): ?>
+                        <?php echo $title_html; ?>
+                    <?php endif; ?>
                     
-                    <p class="text-muted-foreground mb-6 leading-relaxed">
-                        В <a href="/blog/fz127" class="text-primary hover:underline">законе №127-ФЗ «О банкротстве»</a> внесены 
-                        изменения (<a href="/blog/fz289" class="text-primary hover:underline">№289-ФЗ от 31.07.2020</a>), 
-                        которые позволяют физлицам воспользоваться бесплатной внесудебной процедурой банкротства через МФЦ. 
-                        Новые изменения помогают государству разгрузить суды и сделать процесс списания долгов проще и дешевле для граждан.
-                    </p>
+                    <?php if ($text): ?>
+                        <div class="text-muted-foreground mb-6 leading-relaxed">
+                            <?php echo wp_kses_post($text); ?>
+                        </div>
+                    <?php endif; ?>
 
                     <!-- Button and description -->
-                    <div class="flex flex-col sm:flex-row gap-4 items-start">
-                        <a href="<?php echo esc_url($test_link); ?>" 
-                           class="inline-flex items-center justify-center whitespace-nowrap h-11 rounded-md px-8 text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
-                            Начать тест
-                        </a>
-                        <p class="text-sm text-muted-foreground">
-                            Пройдите тест из 5 вопросов и узнайте, подходит ли вам эта процедура по списанию долгов
-                        </p>
-                    </div>
+                    <?php if ($button_text || $button_subtext): ?>
+                        <div class="flex flex-col sm:flex-row gap-4 items-start">
+                            <?php if ($button_text && $button_link): ?>
+                                <a href="<?php echo esc_url($button_link); ?>" 
+                                   class="inline-flex items-center justify-center whitespace-nowrap h-11 rounded-md px-8 text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+                                    <?php echo esc_html($button_text); ?>
+                                </a>
+                            <?php endif; ?>
+                            
+                            <?php if ($button_subtext): ?>
+                                <p class="text-sm text-muted-foreground">
+                                    <?php echo esc_html($button_subtext); ?>
+                                </p>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
                 
                 <!-- Right column - 3D Arrow -->

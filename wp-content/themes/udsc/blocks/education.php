@@ -16,7 +16,7 @@ if (empty($education_list)) {
 ?>
 
 <section class="pb-20 bg-card/30">
-    <div class="container mx-auto max-w-6xl">
+    <div class="container mx-auto">
         <h2 class="text-3xl font-bold text-center mb-12">
             Образование
         </h2>

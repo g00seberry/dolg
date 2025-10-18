@@ -42,10 +42,7 @@ $title_html = udsc_parse_title_with_tag($section_title);
                     $features = $service['features'];
                     $price = $service['price'];
                     $term = $service['term'];
-                    $button_1_text = $service['button_1_text'];
                     $button_1_link = $service['button_1_link'];
-                    $button_2_text = $service['button_2_text'];
-                    $button_2_link = $service['button_2_link'];
                     ?>
                     
                     <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-6 relative flex flex-col <?php echo $label ? 'border-primary' : ''; ?>">
@@ -108,25 +105,17 @@ $title_html = udsc_parse_title_with_tag($section_title);
                             </div>
                         <?php endif; ?>
                         
-                        <?php if ($button_1_text || $button_2_text): ?>
+                      
                             <div class="space-y-3 mt-auto">
-                                <?php if ($button_1_text): ?>
-                                    <a href="<?php echo esc_url($button_1_link ?: '#'); ?>" class="block">
-                                        <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full">
-                                            <?php echo esc_html($button_1_text); ?>
-                                        </button>
-                                    </a>
-                                <?php endif; ?>
-                                
-                                <?php if ($button_2_text): ?>
-                                    <a href="<?php echo esc_url($button_2_link ?: '#'); ?>" class="block">
-                                        <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 w-full">
-                                            <?php echo esc_html($button_2_text); ?>
-                                        </button>
-                                    </a>
-                                <?php endif; ?>
+                                <a href="<?php echo esc_url($button_1_link ?: '#'); ?>" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full">
+                                    Подробнее
+                                </a>
+                                    
+                                <button data-toggle="modal" data-target="#consultation-modal" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 w-full">
+                                    Заказать услугу
+                                </button>
                             </div>
-                        <?php endif; ?>
+                     
                     </div>
                 <?php endforeach; ?>
             </div>
