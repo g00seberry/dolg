@@ -7,20 +7,35 @@
 // Получаем данные из ACF полей
 $data = $args['data'];
 $achievements = $data['achievements'] ?? [];
+$section_title = $data['section_title'];
+$section_subtitle = $data['section_subtitle'];
 
 // Если нет данных, не выводим блок
 if (empty($achievements)) {
     return;
 }
 
+
+$title_html = udsc_parse_title_with_tag($section_title, 'h2', 'text-3xl lg:text-4xl font-bold mb-4');
 ?>
 
-<section class="pb-20">
+<section class="py-20">
     <div class="container mx-auto">
         <div class="rounded-lg border bg-card text-card-foreground shadow-sm p-8">
-            <h3 class="text-2xl font-semibold mb-6">
-                Достижения и квалификация
-            </h3>
+            <!-- Section Header -->
+            <?php if ($section_title || $section_subtitle): ?>
+                <div class="text-left mb-12">
+                    <?php if ($title_html): ?>
+                        <?php echo $title_html; ?>
+                    <?php endif; ?>
+                    
+                    <?php if ($section_subtitle): ?>
+                        <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+                            <?php echo nl2br(esc_html($section_subtitle)); ?>
+                        </p>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
             <div class="grid md:grid-cols-2 gap-6">
                 <?php foreach ($achievements as $achievement): ?>
                 <?php

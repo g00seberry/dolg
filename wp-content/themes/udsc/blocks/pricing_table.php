@@ -13,6 +13,21 @@ $note = $data['note'];
 
 // Обработка заголовка с помощью утилитарной функции
 $title_html = udsc_parse_title_with_tag($section_title, 'h2', 'text-3xl lg:text-4xl font-bold mb-4');
+
+// Проверяем наличие данных в каждом столбце
+$has_name = false;
+$has_description = false;
+$has_term = false;
+$has_price = false;
+
+if ($table) {
+    foreach ($table as $service) {
+        if (!empty($service['name'])) $has_name = true;
+        if (!empty($service['description'])) $has_description = true;
+        if (!empty($service['term'])) $has_term = true;
+        if (!empty($service['price'])) $has_price = true;
+    }
+}
 ?>
 
 <!-- Pricing Table -->
@@ -41,10 +56,18 @@ $title_html = udsc_parse_title_with_tag($section_title, 'h2', 'text-3xl lg:text-
                         <table class="w-full">
                             <thead class="bg-primary text-primary-foreground">
                                 <tr>
-                                    <th class="text-left p-4 font-semibold">Услуга</th>
-                                    <th class="text-left p-4 font-semibold">Описание</th>
-                                    <th class="text-left p-4 font-semibold">Срок</th>
-                                    <th class="text-right p-4 font-semibold">Стоимость</th>
+                                    <?php if ($has_name): ?>
+                                        <th class="text-left p-4 font-semibold">Услуга</th>
+                                    <?php endif; ?>
+                                    <?php if ($has_description): ?>
+                                        <th class="text-left p-4 font-semibold">Описание</th>
+                                    <?php endif; ?>
+                                    <?php if ($has_term): ?>
+                                        <th class="text-left p-4 font-semibold">Срок</th>
+                                    <?php endif; ?>
+                                    <?php if ($has_price): ?>
+                                        <th class="text-right p-4 font-semibold">Стоимость</th>
+                                    <?php endif; ?>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-border">
@@ -67,18 +90,26 @@ $title_html = udsc_parse_title_with_tag($section_title, 'h2', 'text-3xl lg:text-
                                     ?>
                                     
                                     <tr class="hover:bg-muted/50 <?php echo $is_highlighted ? 'bg-primary/5' : ''; ?> <?php echo $has_border_top ? 'border-t-2 border-primary/20' : ''; ?>">
-                                        <td class="p-4 font-medium">
-                                            <?php echo esc_html($name); ?>
-                                        </td>
-                                        <td class="p-4 text-muted-foreground">
-                                            <?php echo esc_html($description); ?>
-                                        </td>
-                                        <td class="p-4 text-muted-foreground">
-                                            <?php echo esc_html($term); ?>
-                                        </td>
-                                        <td class="p-4 text-right font-semibold <?php echo esc_attr($price_class); ?>">
-                                            <?php echo esc_html($price); ?>
-                                        </td>
+                                        <?php if ($has_name): ?>
+                                            <td class="p-4 font-medium">
+                                                <?php echo esc_html($name); ?>
+                                            </td>
+                                        <?php endif; ?>
+                                        <?php if ($has_description): ?>
+                                            <td class="p-4 text-muted-foreground">
+                                                <?php echo esc_html($description); ?>
+                                            </td>
+                                        <?php endif; ?>
+                                        <?php if ($has_term): ?>
+                                            <td class="p-4 text-muted-foreground">
+                                                <?php echo esc_html($term); ?>
+                                            </td>
+                                        <?php endif; ?>
+                                        <?php if ($has_price): ?>
+                                            <td class="p-4 text-right font-semibold <?php echo esc_attr($price_class); ?>">
+                                                <?php echo esc_html($price); ?>
+                                            </td>
+                                        <?php endif; ?>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>

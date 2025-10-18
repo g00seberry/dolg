@@ -9,6 +9,7 @@ $data = $args['data'];
 $section_title = $data['section_title'];
 $section_subtitle = $data['section_subtitle'];
 $steps_list = $data['steps_list'] ?? [];
+$direction = $data['direction'] ?? false;
 
 // Обработка заголовка с помощью утилитарной функции
 $title_html = udsc_parse_title_with_tag($section_title, 'h2', 'text-3xl lg:text-4xl font-bold mb-4');
@@ -32,40 +33,80 @@ $title_html = udsc_parse_title_with_tag($section_title, 'h2', 'text-3xl lg:text-
             </div>
         <?php endif; ?>
 
-        <!-- Process Steps Grid -->
+        <!-- Process Steps -->
         <?php if ($steps_list): ?>
-            <div class="grid md:grid-cols-3 gap-8">
-                <?php foreach ($steps_list as $index => $step): ?>
-                    <?php
-                    $number = $step['number'];
-                    $title = $step['title'];
-                    $description = $step['description'];
-                    ?>
-                    
-                    <div class="text-center">
-                        <!-- Step Number Circle -->
-                        <?php if ($number): ?>
-                            <div class="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">
-                                <?php echo esc_html($number); ?>
+            <?php if ($direction): ?>
+                <!-- Vertical Layout -->
+                <div class="space-y-8">
+                    <?php foreach ($steps_list as $index => $step): ?>
+                        <?php
+                        $number = $step['number'];
+                        $title = $step['title'];
+                        $description = $step['description'];
+                        ?>
+                        
+                        <div class="flex items-start gap-6">
+                            <!-- Step Number Circle -->
+                            <?php if ($number): ?>
+                                <div class="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-2xl font-bold flex-shrink-0">
+                                    <?php echo esc_html($number); ?>
+                                </div>
+                            <?php endif; ?>
+                            
+                            <!-- Step Content -->
+                            <div class="flex-1">
+                                <!-- Step Title -->
+                                <?php if ($title): ?>
+                                    <h3 class="text-xl font-semibold mb-4">
+                                        <?php echo esc_html($title); ?>
+                                    </h3>
+                                <?php endif; ?>
+                                
+                                <!-- Step Description -->
+                                <?php if ($description): ?>
+                                    <p class="text-muted-foreground">
+                                        <?php echo nl2br(esc_html($description)); ?>
+                                    </p>
+                                <?php endif; ?>
                             </div>
-                        <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php else: ?>
+                <!-- Grid Layout (default) -->
+                <div class="grid md:grid-cols-3 gap-8">
+                    <?php foreach ($steps_list as $index => $step): ?>
+                        <?php
+                        $number = $step['number'];
+                        $title = $step['title'];
+                        $description = $step['description'];
+                        ?>
                         
-                        <!-- Step Title -->
-                        <?php if ($title): ?>
-                            <h3 class="text-xl font-semibold mb-4">
-                                <?php echo esc_html($title); ?>
-                            </h3>
-                        <?php endif; ?>
-                        
-                        <!-- Step Description -->
-                        <?php if ($description): ?>
-                            <p class="text-muted-foreground">
-                                <?php echo nl2br(esc_html($description)); ?>
-                            </p>
-                        <?php endif; ?>
-                    </div>
-                <?php endforeach; ?>
-            </div>
+                        <div class="text-center">
+                            <!-- Step Number Circle -->
+                            <?php if ($number): ?>
+                                <div class="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">
+                                    <?php echo esc_html($number); ?>
+                                </div>
+                            <?php endif; ?>
+                            
+                            <!-- Step Title -->
+                            <?php if ($title): ?>
+                                <h3 class="text-xl font-semibold mb-4">
+                                    <?php echo esc_html($title); ?>
+                                </h3>
+                            <?php endif; ?>
+                            
+                            <!-- Step Description -->
+                            <?php if ($description): ?>
+                                <p class="text-muted-foreground">
+                                    <?php echo nl2br(esc_html($description)); ?>
+                                </p>
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
         <?php endif; ?>
     </div>
 </section>
