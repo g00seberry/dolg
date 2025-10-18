@@ -156,15 +156,14 @@
 					<h5 class="font-medium text-sm mb-3 text-foreground">Юридическая информация</h5>
 					<div class="space-y-2 text-xs text-muted-foreground">
 						<p>
-							<strong class="text-foreground">ИНДИВИДУАЛЬНЫЙ ПРЕДПРИНИМАТЕЛЬ БАБИЧЕВ НИКИТА СЕРГЕЕВИЧ</strong>
+							<strong class="text-foreground"><?php echo esc_html(udsc_get_contact_entrepreneur_name()); ?></strong>
 						</p>
 						<p>
-							<span class="text-foreground font-medium">ИНН:</span> 753300181690
+							<span class="text-foreground font-medium">ИНН:</span> <?php echo esc_html(udsc_get_contact_inn()); ?>
 						</p>
 						<p>
 							<span class="text-foreground font-medium">Юридический адрес:</span><br />
-							196628, РОССИЯ, Г САНКТ-ПЕТЕРБУРГ, ТЕР. СЛАВЯНКА (П ШУШАРЫ),<br />
-							УЛ РОСТОВСКАЯ, Д 26, КОРП 2 ЛИТЕРА А, А, КВ 125
+							<?php echo nl2br(esc_html(udsc_get_contact_legal_address())); ?>
 						</p>
 					</div>
 				</div>
