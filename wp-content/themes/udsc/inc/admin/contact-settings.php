@@ -48,6 +48,9 @@ class UDSC_Contact_Settings {
         register_setting('udsc_contact', 'udsc_contact_vk');
         register_setting('udsc_contact', 'udsc_contact_telegram');
         register_setting('udsc_contact', 'udsc_contact_whatsapp');
+        register_setting('udsc_contact', 'udsc_contact_entrepreneur_name');
+        register_setting('udsc_contact', 'udsc_contact_inn');
+        register_setting('udsc_contact', 'udsc_contact_legal_address');
         
         // Добавляем секцию
         add_settings_section(
@@ -110,6 +113,30 @@ class UDSC_Contact_Settings {
             'udsc_contact_whatsapp',
             'Ссылка на WhatsApp',
             [__CLASS__, 'whatsapp_render'],
+            'udsc_contact',
+            'udsc_contact_section'
+        );
+        
+        add_settings_field(
+            'udsc_contact_entrepreneur_name',
+            'ФИО предпринимателя',
+            [__CLASS__, 'entrepreneur_name_render'],
+            'udsc_contact',
+            'udsc_contact_section'
+        );
+        
+        add_settings_field(
+            'udsc_contact_inn',
+            'ИНН',
+            [__CLASS__, 'inn_render'],
+            'udsc_contact',
+            'udsc_contact_section'
+        );
+        
+        add_settings_field(
+            'udsc_contact_legal_address',
+            'Юридический адрес',
+            [__CLASS__, 'legal_address_render'],
             'udsc_contact',
             'udsc_contact_section'
         );
@@ -181,6 +208,31 @@ class UDSC_Contact_Settings {
     }
     
     /**
+     * Поле ФИО предпринимателя
+     */
+    public static function entrepreneur_name_render() {
+        $value = get_option('udsc_contact_entrepreneur_name', 'ИНДИВИДУАЛЬНЫЙ ПРЕДПРИНИМАТЕЛЬ БАБИЧЕВ НИКИТА СЕРГЕЕВИЧ');
+        echo '<input type="text" name="udsc_contact_entrepreneur_name" value="' . esc_attr($value) . '" class="large-text" placeholder="ИНДИВИДУАЛЬНЫЙ ПРЕДПРИНИМАТЕЛЬ БАБИЧЕВ НИКИТА СЕРГЕЕВИЧ">';
+    }
+    
+    /**
+     * Поле ИНН
+     */
+    public static function inn_render() {
+        $value = get_option('udsc_contact_inn', '753300181690');
+        echo '<input type="text" name="udsc_contact_inn" value="' . esc_attr($value) . '" class="regular-text" placeholder="753300181690">';
+        echo '<p class="description">12 цифр для ИП</p>';
+    }
+    
+    /**
+     * Поле юридического адреса
+     */
+    public static function legal_address_render() {
+        $value = get_option('udsc_contact_legal_address', '196628, РОССИЯ, Г САНКТ-ПЕТЕРБУРГ, ТЕР. СЛАВЯНКА (П ШУШАРЫ), УЛ РОСТОВСКАЯ, Д 26, КОРП 2 ЛИТЕРА А, А, КВ 125');
+        echo '<textarea name="udsc_contact_legal_address" rows="4" class="large-text" placeholder="Юридический адрес">' . esc_textarea($value) . '</textarea>';
+    }
+    
+    /**
      * Страница настроек
      */
     public static function options_page() {
@@ -238,4 +290,16 @@ function udsc_get_contact_telegram() {
 
 function udsc_get_contact_whatsapp() {
     return UDSC_Contact_Settings::get_option('whatsapp', '');
+}
+
+function udsc_get_contact_entrepreneur_name() {
+    return UDSC_Contact_Settings::get_option('entrepreneur_name', 'ИНДИВИДУАЛЬНЫЙ ПРЕДПРИНИМАТЕЛЬ БАБИЧЕВ НИКИТА СЕРГЕЕВИЧ');
+}
+
+function udsc_get_contact_inn() {
+    return UDSC_Contact_Settings::get_option('inn', '753300181690');
+}
+
+function udsc_get_contact_legal_address() {
+    return UDSC_Contact_Settings::get_option('legal_address', '196628, РОССИЯ, Г САНКТ-ПЕТЕРБУРГ, ТЕР. СЛАВЯНКА (П ШУШАРЫ), УЛ РОСТОВСКАЯ, Д 26, КОРП 2 ЛИТЕРА А, А, КВ 125');
 }
