@@ -25,7 +25,7 @@
 								Финансовый щит
 							</div>
 							<div class="text-base text-muted-foreground -mt-1">
-								Банкротство • Списание долгов • Защита от кредиторов
+								<?php echo esc_html(udsc_get_contact_tagline()); ?>
 							</div>
 						</div>
 					</div>

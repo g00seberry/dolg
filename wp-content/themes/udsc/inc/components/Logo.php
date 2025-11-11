@@ -23,7 +23,7 @@ class UDSC_Logo {
                     Финансовый щит
                 </div>
                 <div class="text-sm text-muted-foreground -mt-1">
-                    Банкротство • Списание долгов • Защита от кредиторов
+                    <?php echo esc_html(udsc_get_contact_tagline()); ?>
                 </div>
             </div>
         </a>

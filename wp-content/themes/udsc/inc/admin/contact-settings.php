@@ -41,6 +41,7 @@ class UDSC_Contact_Settings {
      */
     public static function settings_init() {
         // Регистрируем настройки
+        register_setting('udsc_contact', 'udsc_contact_tagline');
         register_setting('udsc_contact', 'udsc_contact_phone');
         register_setting('udsc_contact', 'udsc_contact_email');
         register_setting('udsc_contact', 'udsc_contact_address');
@@ -61,6 +62,14 @@ class UDSC_Contact_Settings {
         );
         
         // Добавляем поля
+        add_settings_field(
+            'udsc_contact_tagline',
+            'Слоган компании',
+            [__CLASS__, 'tagline_render'],
+            'udsc_contact',
+            'udsc_contact_section'
+        );
+
         add_settings_field(
             'udsc_contact_phone',
             'Телефон',
@@ -149,6 +158,14 @@ class UDSC_Contact_Settings {
         echo '<p>Здесь вы можете настроить контактную информацию, которая будет отображаться на сайте.</p>';
     }
     
+    /**
+     * Поле слогана
+     */
+    public static function tagline_render() {
+        $value = get_option('udsc_contact_tagline', 'Банкротство • Списание долгов • Защита от кредиторов');
+        echo '<input type="text" name="udsc_contact_tagline" value="' . esc_attr($value) . '" class="large-text" placeholder="Банкротство • Списание долгов • Защита от кредиторов">';
+    }
+
     /**
      * Поле телефона
      */
@@ -266,6 +283,10 @@ UDSC_Contact_Settings::init();
  */
 function udsc_get_contact_phone() {
     return UDSC_Contact_Settings::get_option('phone', '+79910042077');
+}
+
+function udsc_get_contact_tagline() {
+    return UDSC_Contact_Settings::get_option('tagline', 'Банкротство • Списание долгов • Защита от кредиторов');
 }
 
 function udsc_get_contact_email() {

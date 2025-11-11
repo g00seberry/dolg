@@ -9,22 +9,6 @@
 class UDSC_ContactBar {
 
     /**
-     * Верхние ссылки рядом с переключателем города
-     *
-     * @return array[]
-     */
-    private static function get_top_links() {
-        return array(
-            array('url' => home_url('/about'), 'label' => 'О нас'),
-            array('url' => home_url('/editorial'), 'label' => 'Редакция'),
-            array('url' => home_url('/promotions'), 'label' => 'Акции'),
-            array('url' => home_url('/testimonials'), 'label' => 'Отзывы'),
-            array('url' => home_url('/blog'), 'label' => 'Статьи'),
-            array('url' => home_url('/contacts'), 'label' => 'Контакты'),
-        );
-    }
-
-    /**
      * Социальные ссылки и действия в верхней панели
      *
      * @return array[]
@@ -137,11 +121,11 @@ class UDSC_ContactBar {
             case 'gift':
                 return '<svg class="' . esc_attr($classes) . '" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12v8a2 2 0 01-2 2H6a2 2 0 01-2-2v-8"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 12h20"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 22V12"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8a2 2 0 10-4 0h4z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8a2 2 0 114 0h-4z"></path></svg>';
             case 'icons8-tg':
-                return '<img src="' . esc_url(get_template_directory_uri() . '/assets/images/icons8-tg.svg') . '" alt="' . esc_attr__('Telegram', 'udsc') . '" class="' . esc_attr($classes) . '" width="18" height="18" style="width:18px;height:18px;">';
+                return '<img src="' . esc_url(get_template_directory_uri() . '/assets/images/icons8-tg.svg') . '" alt="' . esc_attr__('Telegram', 'udsc') . '" class="' . esc_attr($classes) . '" width="24" height="24" style="width:24px;height:24px;">';
             case 'icons8-vk':
-                return '<img src="' . esc_url(get_template_directory_uri() . '/assets/images/icons8-vk.svg') . '" alt="' . esc_attr__('VK', 'udsc') . '" class="' . esc_attr($classes) . '" width="18" height="18" style="width:18px;height:18px;">';
+                return '<img src="' . esc_url(get_template_directory_uri() . '/assets/images/icons8-vk.svg') . '" alt="' . esc_attr__('VK', 'udsc') . '" class="' . esc_attr($classes) . '" width="24" height="24" style="width:24px;height:24px;">';
             case 'icons8-whatsapp-logo':
-                return '<img src="' . esc_url(get_template_directory_uri() . '/assets/images/icons8-whatsapp-logo.svg') . '" alt="' . esc_attr__('WhatsApp', 'udsc') . '" class="' . esc_attr($classes) . '" width="18" height="18" style="width:18px;height:18px;">';
+                return '<img src="' . esc_url(get_template_directory_uri() . '/assets/images/icons8-whatsapp-logo.svg') . '" alt="' . esc_attr__('WhatsApp', 'udsc') . '" class="' . esc_attr($classes) . '" width="24" height="24" style="width:24px;height:24px;">';
             case 'user':
                 return '<svg class="' . esc_attr($classes) . '" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A9 9 0 1118.88 17.804M12 14a5 5 0 100-10 5 5 0 000 10z"></path></svg>';
             case 'search':
@@ -421,7 +405,6 @@ class UDSC_ContactBar {
      * @return string
      */
     public static function render() {
-        $top_links = self::get_top_links();
         $social_links = self::get_social_links();
         $default_city = 'Москва';
 
@@ -436,21 +419,15 @@ class UDSC_ContactBar {
                     </button>
 
                     <div class="hidden md:flex items-center gap-6">
-                        <?php foreach ($top_links as $link) : ?>
-                            <a href="<?php echo esc_url($link['url']); ?>" class="hover:text-primary transition-colors" style="color: #666666;">
-                                <?php echo esc_html($link['label']); ?>
-                            </a>
-                        <?php endforeach; ?>
-
-                        <div class="flex items-center gap-3 border-l border-border pl-6">
+                        <div class="flex items-center gap-3">
                             <?php foreach ($social_links as $link) : ?>
                                 <?php if (!empty($link['type']) && 'button' === $link['type']) : ?>
                                     <button <?php echo self::build_attributes($link['attributes']); ?> class="<?php echo esc_attr($link['extra_classes']); ?>" title="<?php echo esc_attr($link['title']); ?>">
-                                        <?php echo self::get_icon($link['icon']); ?>
+                                        <?php echo self::get_icon($link['icon'], 'h-6 w-6'); ?>
                                     </button>
                                 <?php elseif (!empty($link['url'])) : ?>
                                     <a href="<?php echo esc_url($link['url']); ?>" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors" title="<?php echo esc_attr($link['title']); ?>">
-                                        <?php echo self::get_icon($link['icon']); ?>
+                                        <?php echo self::get_icon($link['icon'], 'h-6 w-6'); ?>
                                     </a>
                                 <?php endif; ?>
                             <?php endforeach; ?>
