@@ -19,7 +19,7 @@ if ($article_content && is_array($article_content)) {
 }
 
 // Получаем дополнительные поля
-$views = $hero_data['views'] ?? 0;
+$views = get_field('views', get_the_ID());
 $comments_count = $hero_data['comments_count'] ?? 0;
 $author_name = $hero_data['author'] ?? get_the_author();
 $category_name = $hero_data['category'] ?? '';
@@ -150,7 +150,7 @@ if ($hero_image && is_array($hero_image)) {
                                 <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
                                 <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
                             </svg>
-                            <?php echo number_format($views); ?> просмотров
+                            просмотров: <?php echo number_format($views); ?>
                         </span>
                     <?php endif; ?>
                     

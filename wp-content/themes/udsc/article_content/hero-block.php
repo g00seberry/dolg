@@ -10,7 +10,7 @@ if (!function_exists('render_hero_block')) {
         $subtitle = $fields['subtitle'] ?? '';
         $author = $fields['author'] ?? '';
         $date = $fields['date'] ?? '';
-        $views = $fields['views'] ?? 0;
+        $views = get_field('views', get_the_ID());
         $category = $fields['category'] ?? 'Законодательство';
         $comments_count = $fields['comments_count'] ?? 0;
         
@@ -78,7 +78,7 @@ if (!function_exists('render_hero_block')) {
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                             </svg>
-                            <span><?php echo number_format($views); ?> просмотров</span>
+                            <span>просмотров: <?php echo number_format($views); ?></span>
                         </div>
                     <?php endif; ?>
                     

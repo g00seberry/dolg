@@ -749,3 +749,36 @@ function handle_testimonial_form_ajax() {
         wp_send_json_error('Ошибка при сохранении отзыва');
     }
 }
+
+if (!function_exists('udsc_increment_blog_views')) {
+    /**
+     * Инкрементирует счетчик просмотров для записей блога.
+     *
+     * Запускается при посещении single страницы кастомного типа записи blog
+     * и обновляет значение в ACF поле `views`.
+     *
+     * @return void
+     */
+    function udsc_increment_blog_views() {
+        if (is_admin() || wp_doing_ajax() || wp_doing_cron() || is_preview()) {
+            return;
+        }
+
+        if (!is_singular('blog')) {
+            return;
+        }
+
+        $post_id = get_queried_object_id();
+
+        if (!$post_id || !function_exists('get_field') || !function_exists('update_field')) {
+            return;
+        }
+
+        $current_views = get_field('views', $post_id);
+        $new_views = $current_views + 1;
+
+        update_field('views', $new_views, $post_id);
+    }
+
+    add_action('template_redirect', 'udsc_increment_blog_views');
+}
