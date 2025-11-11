@@ -6,6 +6,7 @@ import "./header-navigation.js";
 import "./case-studies-filter.js";
 import "./testimonial-form.js";
 import "./contact-form.js";
+import "./carousel.js";
 
 // Initialize all components in your app
 initMaterialTailwind();
