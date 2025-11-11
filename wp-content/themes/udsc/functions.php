@@ -9,9 +9,166 @@
 
 // Подключаем админские настройки контактов
 require_once get_template_directory() . '/inc/admin/contact-settings.php';
+require_once get_template_directory() . '/MainNav.php';
+
+if (is_admin()) {
+    require_once get_template_directory() . '/inc/admin/menu-fields.php';
+}
 
 // Подключаем класс фильтрации кейсов
 require_once get_template_directory() . '/includes/class-case-studies-filter.php';
+
+// /**
+//  * Создает и заполняет первичное меню при необходимости
+//  */
+// function udsc_seed_primary_menu_force() {
+//     if (get_option('udsc_primary_menu_seeded_force')) {
+//         return;
+//     }
+
+//     $menu_name = __('Главное меню UDSC', 'udsc');
+//     $menu = wp_get_nav_menu_object($menu_name);
+
+//     if (!$menu instanceof WP_Term) {
+//         $menu_id = wp_create_nav_menu($menu_name);
+//         $menu = wp_get_nav_menu_object($menu_id);
+//     }
+
+//     if (!$menu instanceof WP_Term) {
+//         return;
+//     }
+
+//     $menu_id = (int) $menu->term_id;
+
+//     // Remove existing menu completely, then recreate
+//     wp_delete_nav_menu($menu_id);
+//     $menu_id = wp_create_nav_menu($menu_name);
+
+//     if (is_wp_error($menu_id) || !$menu_id) {
+//         return;
+//     }
+
+//     $locations = get_theme_mod('nav_menu_locations');
+//     if (!is_array($locations)) {
+//         $locations = array();
+//     }
+//     $locations['menu-1'] = $menu_id;
+//     set_theme_mod('nav_menu_locations', $locations);
+
+//     $create_menu_item = static function ($args) use ($menu_id) {
+//         $defaults = array(
+//             'menu-item-db-id'     => 0,
+//             'menu-item-object-id' => 0,
+//             'menu-item-object'    => 'custom',
+//             'menu-item-type'      => 'custom',
+//             'menu-item-title'     => '',
+//             'menu-item-url'       => '',
+//             'menu-item-status'    => 'publish',
+//         );
+//         $item_args = wp_parse_args($args, $defaults);
+//         return wp_update_nav_menu_item($menu_id, 0, $item_args);
+//     };
+
+//     $defaults = array(
+//         array(
+//             'title'    => 'Банкротство',
+//             'url'      => home_url('/services'),
+//             'target'   => '',
+//             'children' => array(
+//                 array(
+//                     'title'    => 'Банкротим под ключ',
+//                     'url'      => '',
+//                     'target'   => '',
+//                     'children' => array(
+//                         array('title' => 'Юрист по банкротству', 'url' => home_url('/services/lawyer'), 'target' => ''),
+//                         array('title' => 'Дистанционное банкротство', 'url' => home_url('/services/remote'), 'target' => ''),
+//                         array('title' => 'Рассрочка на банкротство', 'url' => home_url('/services/installment'), 'target' => ''),
+//                         array('title' => 'Банкротство с микрозаймами МФО', 'url' => home_url('/services/microloans'), 'target' => ''),
+//                         array('title' => 'Судебное банкротство', 'url' => home_url('/services/court'), 'target' => ''),
+//                         array('title' => 'Быстрое банкротство', 'url' => home_url('/services/fast'), 'target' => ''),
+//                         array('title' => 'Бесплатная консультация', 'url' => home_url('/legal-consultation'), 'target' => ''),
+//                     ),
+//                 ),
+//                 array(
+//                     'title'    => 'Списываем долги',
+//                     'url'      => '',
+//                     'target'   => '',
+//                     'children' => array(
+//                         array('title' => 'Списать долги физическим лицам законно', 'url' => home_url('/services/individuals'), 'target' => ''),
+//                         array('title' => 'Банкротство умершего', 'url' => home_url('/services/deceased'), 'target' => ''),
+//                         array('title' => 'Банкротство инвалида', 'url' => home_url('/services/disabled'), 'target' => ''),
+//                         array('title' => 'Банкротство ИП', 'url' => home_url('/services/ip'), 'target' => ''),
+//                         array('title' => 'Банкротство самозанятого', 'url' => home_url('/services/self-employed'), 'target' => ''),
+//                         array('title' => 'Банкротство военнослужащего', 'url' => home_url('/services/military'), 'target' => ''),
+//                         array('title' => 'Совместное банкротство супругов', 'url' => home_url('/services/spouses'), 'target' => ''),
+//                         array('title' => 'Банкротство пенсионера', 'url' => home_url('/services/pensioner'), 'target' => ''),
+//                     ),
+//                 ),
+//                 array(
+//                     'title'    => 'Списываем кредиты',
+//                     'url'      => '',
+//                     'target'   => '',
+//                     'children' => array(
+//                         array('title' => 'Списать потребительские кредиты', 'url' => home_url('/services/consumer-loans'), 'target' => ''),
+//                         array('title' => 'Списать микрозаймы', 'url' => home_url('/services/microloans-write-off'), 'target' => ''),
+//                         array('title' => 'Как списать долги и сохранить ипотеку?', 'url' => home_url('/services/mortgage'), 'target' => ''),
+//                     ),
+//                 ),
+//             ),
+//         ),
+//         array('title' => 'Успешные дела', 'url' => home_url('/case-studies'), 'target' => '', 'children' => array()),
+//         array('title' => 'Цены', 'url' => home_url('/pricing'), 'target' => '', 'children' => array()),
+//         array('title' => 'Финщит', 'url' => home_url('/blog'), 'target' => '', 'children' => array()),
+//         array('title' => 'О компании', 'url' => home_url('/about'), 'target' => '', 'children' => array()),
+//         array('title' => 'Отзывы', 'url' => home_url('/testimonials'), 'target' => '', 'children' => array()),
+//         array('title' => 'Контакты', 'url' => home_url('/contacts'), 'target' => '', 'children' => array()),
+//     );
+
+//     foreach ($defaults as $item) {
+//         $item_id = $create_menu_item(array(
+//             'menu-item-title' => $item['title'],
+//             'menu-item-url'   => $item['url'],
+//         ));
+
+//         if (!$item_id || is_wp_error($item_id)) {
+//             continue;
+//         }
+
+//         if (!empty($item['children'])) {
+//             foreach ($item['children'] as $section) {
+//                 $section_url = !empty($section['url']) ? $section['url'] : '#';
+//                 $section_id = $create_menu_item(array(
+//                     'menu-item-title'      => $section['title'],
+//                     'menu-item-url'        => $section_url,
+//                     'menu-item-parent-id'  => $item_id,
+//                 ));
+
+//                 if (!$section_id || is_wp_error($section_id)) {
+//                     continue;
+//                 }
+
+//                 if (!empty($section['children'])) {
+//                     foreach ($section['children'] as $child) {
+//                         $child_id = $create_menu_item(array(
+//                             'menu-item-title'      => $child['title'],
+//                             'menu-item-url'        => $child['url'],
+//                             'menu-item-parent-id'  => $section_id,
+//                         ));
+//                         if ($child_id && !is_wp_error($child_id) && !empty($child['target'])) {
+//                             update_post_meta($child_id, '_menu_item_target', sanitize_text_field($child['target']));
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+
+//     update_option('udsc_primary_menu_seeded_force', 1, true);
+// }
+
+// add_action('after_switch_theme', 'udsc_seed_primary_menu_force');
+// add_action('admin_init', 'udsc_seed_primary_menu_force');
+// add_action('init', 'udsc_seed_primary_menu_force');
 
 if ( ! defined( '_S_VERSION' ) ) {
 	// Replace the version number of the theme on each release.
