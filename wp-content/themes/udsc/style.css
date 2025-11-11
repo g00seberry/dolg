@@ -1322,6 +1322,10 @@ h4 {
   display: none;
 }
 
+.aspect-\[4\/3\] {
+  aspect-ratio: 4/3;
+}
+
 .h-0 {
   height: 0px;
 }
@@ -3635,6 +3639,10 @@ h4 {
     justify-content: space-between;
   }
 
+  .md\:gap-10 {
+    gap: 2.5rem;
+  }
+
   .md\:self-center {
     align-self: center;
   }
@@ -3716,6 +3724,10 @@ h4 {
 
   .lg\:p-12 {
     padding: 3rem;
+  }
+
+  .lg\:p-7 {
+    padding: 1.75rem;
   }
 
   .lg\:py-24 {
