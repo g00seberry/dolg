@@ -17,6 +17,12 @@ if (!class_exists('UDSC_ContactBar')) {
         require_once $contact_bar_file;
     }
 }
+if (!class_exists('UDSC_Breadcrumbs')) {
+    $breadcrumbs_file = get_template_directory() . '/inc/components/Breadcrumbs.php';
+    if (file_exists($breadcrumbs_file)) {
+        require_once $breadcrumbs_file;
+    }
+}
 if (!class_exists('UDSC_MainNav')) {
     $main_nav_file = get_template_directory() . '/MainNav.php';
     if (file_exists($main_nav_file)) {
@@ -57,4 +63,10 @@ if (!class_exists('UDSC_MainNav')) {
 		
 		<!-- Main Navigation -->
 		<?php echo UDSC_MainNav::render(); ?>
+
 	</header><!-- #masthead -->
+
+	<div class="container py-6">
+		<!-- Breadcrumbs -->
+		<?php echo UDSC_Breadcrumbs::render(); ?>
+	</div>

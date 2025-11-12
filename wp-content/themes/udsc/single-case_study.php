@@ -69,22 +69,9 @@ $json_ld = [
 ?>
 
 <div class="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-    <!-- Breadcrumb -->
-    <section class="py-8 px-4">
-        <div class="container">
-            <a href="<?php echo get_post_type_archive_link('case_study'); ?>" 
-               class="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-6">
-                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                </svg>
-                Вернуться к кейсам
-            </a>
-        </div>
-    </section>
-
     <!-- Header -->
     <section class="px-4 pb-12">
-        <div class="container max-w-6xl">
+        <div class="container ">
             <div class="mb-8">
                 <div class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200 mb-4">
                     <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
