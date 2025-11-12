@@ -17,31 +17,8 @@ get_header();
 				<!-- Blog Header -->
 				<div class="blog-header mb-8">
 					<h1 class="text-3xl font-bold text-gray-900 mb-4">
-						<?php
-						if (is_category()) {
-							single_cat_title();
-						} elseif (is_tag()) {
-							single_tag_title();
-						} elseif (is_author()) {
-							the_author();
-						} elseif (is_date()) {
-							if (is_year()) {
-								echo 'Архив за ' . get_the_date('Y');
-							} elseif (is_month()) {
-								echo 'Архив за ' . get_the_date('F Y');
-							} elseif (is_day()) {
-								echo 'Архив за ' . get_the_date('j F Y');
-							}
-						} else {
-							echo 'Блог';
-						}
-						?>
+						Блог
 					</h1>
-					<?php if (is_category() || is_tag()) : ?>
-						<div class="text-gray-600">
-							<?php echo category_description() ?: tag_description(); ?>
-						</div>
-					<?php endif; ?>
 				</div>
 
 				<!-- Category Filter -->
