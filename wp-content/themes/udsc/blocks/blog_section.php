@@ -61,12 +61,12 @@ function get_blog_icon($icon_name) {
 ?>
 
 <!-- Blog Section - Финщит -->
-<section class="section">
-    <div class="container">
+<section class="section py-12 md:py-20">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Section Header -->
-        <div class="text-center mb-12">
+        <div class="text-center mb-8 md:mb-12">
             <!-- Blog Badge -->
-            <div class="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
+            <div class="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs sm:text-sm font-medium mb-5 md:mb-6">
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                     <?php echo get_blog_icon('book-open'); ?>
                 </svg>
@@ -74,20 +74,20 @@ function get_blog_icon($icon_name) {
             </div>
             
             <!-- Title & Description -->
-            <h2 class="text-3xl lg:text-4xl font-bold mb-4">
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">
                 <?php echo esc_html($blog_title); ?>
             </h2>
-            <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p class="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto px-1">
                 <?php echo esc_html($blog_description); ?>
             </p>
         </div>
 
         <!-- Article Cards Grid -->
-        <div class="grid md:grid-cols-3 gap-8 mb-12">
+        <div class="grid md:grid-cols-3 gap-5 md:gap-8 mb-10 md:mb-12">
             <?php foreach ($article_cards as $card): ?>
-                <div class="bg-card rounded-lg border p-6 hover:shadow-lg transition-all duration-300 group">
+                <div class="bg-card rounded-lg border p-5 md:p-6 hover:shadow-lg transition-all duration-300 group">
                     <!-- Icon -->
-                    <div class="bg-<?php echo esc_attr($card['color']); ?>/10 text-<?php echo esc_attr($card['color']); ?> p-3 rounded-lg w-12 h-12 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <div class="bg-<?php echo esc_attr($card['color']); ?>/10 text-<?php echo esc_attr($card['color']); ?> p-3 rounded-lg w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                         <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                             <?php echo get_blog_icon($card['icon']); ?>
                         </svg>
@@ -99,12 +99,12 @@ function get_blog_icon($icon_name) {
                     </h3>
                     
                     <!-- Description -->
-                    <p class="text-muted-foreground mb-4">
+                    <p class="text-muted-foreground text-sm sm:text-base mb-4">
                         <?php echo esc_html($card['description']); ?>
                     </p>
                     
                     <!-- Stat -->
-                    <div class="flex items-center gap-2 text-sm text-muted-foreground">
+                    <div class="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                             <?php echo get_blog_icon($card['icon'] === 'file-text' ? 'trending-up' : ($card['icon'] === 'scale' ? 'check-circle' : 'eye')); ?>
                         </svg>
@@ -115,14 +115,14 @@ function get_blog_icon($icon_name) {
         </div>
 
         <!-- Popular Topics & CTA Section -->
-        <div class="bg-gradient-to-br from-muted/30 to-muted/10 rounded-2xl p-8">
-            <div class="grid md:grid-cols-2 gap-8 items-center">
+        <div class="bg-gradient-to-br from-muted/30 to-muted/10 rounded-2xl">
+            <div class="grid md:grid-cols-2 gap-6 md:gap-10 items-center">
                 <!-- Popular Topics -->
                 <div>
-                    <h3 class="text-2xl font-bold mb-4">
+                    <h3 class="text-xl sm:text-2xl font-bold mb-4">
                         Популярные темы нашего блога
                     </h3>
-                    <div class="grid grid-cols-2 gap-3 mb-6">
+                    <div class="grid grid-cols-2 gap-2.5 sm:gap-3 mb-6">
                         <?php foreach ($popular_topics as $topic): ?>
                             <div class="flex items-center gap-2">
                                 <svg class="h-4 w-4 text-success" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
@@ -138,17 +138,17 @@ function get_blog_icon($icon_name) {
                 </div>
                 
                 <!-- CTA Block -->
-                <div class="text-center">
-                    <div class="bg-primary/5 border-2 border-dashed border-primary/20 rounded-xl p-8">
+                <div class="text-center px-2 sm:px-4">
+                    <div class="bg-primary/5 border-2 border-dashed border-primary/20 rounded-xl p-6 md:p-8">
                         <svg class="h-16 w-16 text-primary mx-auto mb-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                             <?php echo get_blog_icon('book-open'); ?>
                         </svg>
                         <h4 class="text-lg font-semibold mb-2">Читайте "Финщит"</h4>
-                        <p class="text-muted-foreground text-sm mb-6">
+                        <p class="text-muted-foreground text-sm mb-6 px-2">
                             Станьте экспертом в вопросах банкротства
                         </p>
                         <a href="<?php echo esc_url($blog_link); ?>" 
-                           class="inline-flex items-center justify-center whitespace-nowrap w-full h-11 rounded-md px-8 text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+                           class="inline-flex items-center justify-center whitespace-nowrap w-full h-11 md:h-12 rounded-md px-6 md:px-8 text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
                             <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                                 <?php echo get_blog_icon('book-open'); ?>
                             </svg>
