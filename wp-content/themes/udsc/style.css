@@ -2821,6 +2821,11 @@ h4 {
   padding-right: 0.25rem;
 }
 
+.px-10 {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
 .pb-1 {
   padding-bottom: 0.25rem;
 }
@@ -3255,6 +3260,10 @@ h4 {
 .text-yellow-800 {
   --tw-text-opacity: 1;
   color: rgb(133 77 14 / var(--tw-text-opacity, 1));
+}
+
+.text-muted-foreground\/60 {
+  color: hsl(var(--muted-foreground) / 0.6);
 }
 
 .line-through {
@@ -4165,6 +4174,11 @@ h4 {
   .lg\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
+  }
+
+  .lg\:py-20 {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
   }
 
   .lg\:pb-12 {

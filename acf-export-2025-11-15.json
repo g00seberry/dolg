@@ -18,6 +18,71 @@
           "id": ""
         },
         "layouts": {
+          "layout_situations_grid": {
+            "key": "layout_situations_grid",
+            "name": "situations_grid",
+            "label": "Сложная финансовая ситуация — карточки",
+            "display": "block",
+            "sub_fields": [
+              {
+                "key": "field_sit_title",
+                "label": "Заголовок секции",
+                "name": "section_title",
+                "type": "text",
+                "default_value": "Оказались в сложной финансовой ситуации?"
+              },
+
+              {
+                "key": "field_sit_items",
+                "label": "Карточки",
+                "name": "items",
+                "type": "repeater",
+                "layout": "row",
+                "button_label": "Добавить карточку",
+                "sub_fields": [
+                  {
+                    "key": "field_sit_title_before",
+                    "label": "Заголовок — часть до акцента",
+                    "name": "title_before",
+                    "type": "text",
+                    "wrapper": { "width": "33" }
+                  },
+                  {
+                    "key": "field_sit_title_accent",
+                    "label": "Заголовок — акцент",
+                    "name": "title_accent",
+                    "type": "text",
+                    "wrapper": { "width": "34" }
+                  },
+                  {
+                    "key": "field_sit_title_after",
+                    "label": "Заголовок — часть после",
+                    "name": "title_after",
+                    "type": "text",
+                    "wrapper": { "width": "33" }
+                  },
+                  {
+                    "key": "field_sit_desc",
+                    "label": "Описание",
+                    "name": "description",
+                    "type": "textarea",
+                    "rows": 3
+                  },
+                  {
+                    "key": "field_sit_image",
+                    "label": "Изображение",
+                    "name": "image",
+                    "type": "image",
+                    "return_format": "array",
+                    "preview_size": "medium",
+                    "library": "all"
+                  }
+                ]
+              }
+            ],
+            "min": "",
+            "max": ""
+          },
           "layout_faq_with_form": {
             "key": "layout_faq_with_form",
             "name": "faq_with_form",
